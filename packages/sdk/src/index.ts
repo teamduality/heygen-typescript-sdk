@@ -1,5 +1,3 @@
-import { authenticate } from './services/authentication.js'
-import { apiRequest } from './services/api.js'
 import { listAvatars } from './services/avatars.js'
 import { listVoices } from './services/voices.js'
 import { createVideo, getVideoDetails, deleteVideo } from './services/videos.js'
@@ -16,14 +14,6 @@ export class HeygenSDK {
 
   constructor(apiKey: string) {
     this.apiKey = apiKey
-  }
-
-  async authenticate() {
-    return authenticate(this.apiKey)
-  }
-
-  async makeRequest(endpoint: string, data: Record<string, any>) {
-    return apiRequest(this.apiKey, endpoint, data)
   }
 
   async listAvatars(): Promise<ListAvatarsResponse> {

@@ -4,14 +4,16 @@ import type { RequestInit } from 'node-fetch'
 export async function httpClient(
   url: string,
   method: 'GET' | 'POST' | 'DELETE',
-  body?: Record<string, any>
+  { apiKey, ...body }: Record<string, any>
 ): Promise<any> {
+  console.log('url', url)
   const options: RequestInit = {
     method,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Api-Key': apiKey
     },
-    body: body ? JSON.stringify(body) : undefined
+    body: Object.keys(body).length ? JSON.stringify(body) : undefined
   }
   const response = await fetch(url, options)
 
