@@ -1,16 +1,48 @@
 {
   "name": "heygen-typescript-sdk",
   "version": "0.1.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "description": "Unofficial TypeScript SDK for the Heygen API, providing a simple interface for video generation and management",
+  "author": "Scott Silvi <scott@teamduality.dev>",
+  "license": "MIT",
+  "homepage": "https://github.com/teamduality/heygen-typescript-sdk",
+  "repository": {
+    "type": "git",
+    "url": "teamduality/heygen-typescript-sdk"
+  },
   "packageManager": "pnpm@9.4.0",
   "engines": {
     "node": ">=18"
   },
   "type": "module",
-  "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts"
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
   },
+  "files": [
+    "dist",
+    "package.json",
+    "readme.md",
+    "license"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "heygen",
+    "video",
+    "generation",
+    "typescript",
+    "sdk",
+    "api"
+  ],
   "devDependencies": {
     "@types/node-fetch": "^2.6.12",
     "tsup": "^8.3.5",
