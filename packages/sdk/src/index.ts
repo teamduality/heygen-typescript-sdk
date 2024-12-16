@@ -12,6 +12,12 @@ import {
   createSessionToken,
   listStreamingAvatars
 } from './services/streaming.js'
+import { listVideos } from './services/video-management.js'
+import {
+  listSupportedLanguages,
+  translateVideo,
+  getTranslationStatus
+} from './services/video-translation.js'
 
 import type {
   CreateVideoRequest,
@@ -31,7 +37,13 @@ import type {
   CloseSessionResponse,
   InterruptTaskRequest,
   CreateSessionTokenResponse,
-  ListStreamingAvatarsResponse
+  ListStreamingAvatarsResponse,
+  ListVideosRequest,
+  ListVideosResponse,
+  ListSupportedLanguagesResponse,
+  TranslateVideoRequest,
+  TranslateVideoResponse,
+  TranslationStatusResponse
 } from './types/index.js'
 
 export class HeygenSDK {
@@ -94,7 +106,7 @@ export class StreamingAPI {
   }
 }
 
-export class VideoAPI {
+class VideoGenerationAPI {
   constructor(protected readonly apiKey: string) {}
 
   async create(data: CreateVideoRequest): Promise<CreateVideoResponse> {
@@ -107,6 +119,46 @@ export class VideoAPI {
 
   async delete(videoId: string) {
     return deleteVideo(this.apiKey, videoId)
+  }
+}
+
+class VideoManagementAPI {
+  constructor(protected readonly apiKey: string) {}
+
+  async list(params?: ListVideosRequest): Promise<ListVideosResponse> {
+    return listVideos(this.apiKey, params)
+  }
+}
+
+class VideoTranslationAPI {
+  constructor(protected readonly apiKey: string) {}
+
+  async listLanguages(): Promise<ListSupportedLanguagesResponse> {
+    return listSupportedLanguages(this.apiKey)
+  }
+
+  async translate(
+    data: TranslateVideoRequest
+  ): Promise<TranslateVideoResponse> {
+    return translateVideo(this.apiKey, data)
+  }
+
+  async getStatus(
+    videoTranslateId: string
+  ): Promise<TranslationStatusResponse> {
+    return getTranslationStatus(this.apiKey, videoTranslateId)
+  }
+}
+
+class VideoAPI {
+  public generation: VideoGenerationAPI
+  public management: VideoManagementAPI
+  public translation: VideoTranslationAPI
+
+  constructor(protected readonly apiKey: string) {
+    this.generation = new VideoGenerationAPI(apiKey)
+    this.management = new VideoManagementAPI(apiKey)
+    this.translation = new VideoTranslationAPI(apiKey)
   }
 }
 

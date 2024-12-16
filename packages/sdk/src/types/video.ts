@@ -106,3 +106,60 @@ export interface VideoDetailsResponse {
   thumbnail_url?: string // URL of the video thumbnail
   created_at: number // Creation time (Unix timestamp)
 }
+
+export type VideoType = 'GENERATED' | 'TRANSLATED'
+export type VideoStatus = 'completed' | 'processing' | 'failed' | 'draft'
+
+export interface VideoListItem {
+  video_id: string
+  status: VideoStatus
+  created_at: number
+  type: VideoType
+}
+
+export interface ListVideosRequest {
+  limit?: number
+  token?: string
+}
+
+export interface ListVideosResponse {
+  code: number
+  data: {
+    token: string | null
+    videos: VideoListItem[]
+  }
+  message: string | null
+}
+
+export interface ListSupportedLanguagesResponse {
+  languages: string[]
+}
+
+export interface TranslateVideoRequest {
+  video_url: string
+  title?: string
+  output_language: string
+  translate_audio_only?: boolean
+  speaker_num?: number
+  callback_id?: string
+  enable_dynamic_duration?: boolean
+  brand_voice_id?: string
+  callback_url?: string
+}
+
+export interface TranslateVideoResponse {
+  video_translate_id: string
+}
+
+export type TranslationStatus = 'running' | 'success' | 'failed' | 'pending'
+
+export interface TranslationStatusResponse {
+  error: null
+  data: {
+    video_translate_id: string
+    title: string
+    status: TranslationStatus
+    url: string | null
+    message: string | null
+  }
+}

@@ -13,7 +13,17 @@ export type {
   SilenceVoiceSettings,
   ColorBackground,
   ImageBackground,
-  VideoBackground
+  VideoBackground,
+  VideoType,
+  VideoStatus,
+  VideoListItem,
+  ListVideosRequest,
+  ListVideosResponse,
+  ListSupportedLanguagesResponse,
+  TranslateVideoRequest,
+  TranslateVideoResponse,
+  TranslationStatus,
+  TranslationStatusResponse
 } from './video.js'
 export type {
   CreateStreamingSessionRequest,
