@@ -1,5 +1,4 @@
 import { BaseService } from './base.js'
-import { BASE_URL } from '../config/endpoints.js'
 import type {
   ListTemplatesResponse,
   GetTemplateResponse,
@@ -9,19 +8,16 @@ import type {
 
 export class TemplatesService extends BaseService {
   constructor(apiKey: string) {
-    super(apiKey, 'v2')
+    super(apiKey)
   }
 
   async list(): Promise<ListTemplatesResponse> {
-    return this.request<ListTemplatesResponse>(
-      `${BASE_URL}/v2/templates`,
-      'GET'
-    )
+    return this.requestV2<ListTemplatesResponse>('/templates', 'GET')
   }
 
   async get(templateId: string): Promise<GetTemplateResponse> {
-    return this.request<GetTemplateResponse>(
-      `${BASE_URL}/v2/templates/${templateId}`,
+    return this.requestV2<GetTemplateResponse>(
+      `/templates/${templateId}`,
       'GET'
     )
   }
@@ -30,9 +26,9 @@ export class TemplatesService extends BaseService {
     templateId: string,
     data?: GenerateFromTemplateRequest
   ): Promise<GenerateFromTemplateResponse> {
-    return this.request<
+    return this.requestV2<
       GenerateFromTemplateResponse,
       GenerateFromTemplateRequest
-    >(`${BASE_URL}/v2/templates/${templateId}/generate`, 'POST', data)
+    >(`/templates/${templateId}/generate`, 'POST', data)
   }
 }

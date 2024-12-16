@@ -1,17 +1,28 @@
 import { httpClientV1, httpClientV2 } from '../utils/httpClient.js'
+import { V1_BASE_URL, V2_BASE_URL } from '../config/endpoints.js'
 
 export abstract class BaseService {
-  constructor(
-    protected readonly apiKey: string,
-    protected readonly version: 'v1' | 'v2' = 'v2'
-  ) {}
+  constructor(protected readonly apiKey: string) {}
 
-  protected async request<T, P = Record<string, unknown>>(
+  protected async requestV1<T, P = Record<string, unknown>>(
     path: string,
     method: 'GET' | 'POST' | 'DELETE',
     params?: P
   ): Promise<T> {
-    const client = this.version === 'v1' ? httpClientV1 : httpClientV2
-    return client<T>(path, method, { apiKey: this.apiKey, ...params })
+    return httpClientV1<T>(`${V1_BASE_URL}${path}`, method, {
+      apiKey: this.apiKey,
+      ...params
+    })
+  }
+
+  protected async requestV2<T, P = Record<string, unknown>>(
+    path: string,
+    method: 'GET' | 'POST' | 'DELETE',
+    params?: P
+  ): Promise<T> {
+    return httpClientV2<T>(`${V2_BASE_URL}${path}`, method, {
+      apiKey: this.apiKey,
+      ...params
+    })
   }
 }

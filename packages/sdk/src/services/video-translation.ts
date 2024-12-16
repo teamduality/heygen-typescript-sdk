@@ -1,5 +1,4 @@
 import { BaseService } from './base.js'
-import { BASE_URL } from '../config/endpoints.js'
 import type {
   ListSupportedLanguagesResponse,
   TranslateVideoRequest,
@@ -9,12 +8,12 @@ import type {
 
 export class VideoTranslationService extends BaseService {
   constructor(apiKey: string) {
-    super(apiKey, 'v2')
+    super(apiKey)
   }
 
   async listLanguages(): Promise<ListSupportedLanguagesResponse> {
-    return this.request<ListSupportedLanguagesResponse>(
-      `${BASE_URL}/v2/video_translation.supported_languages`,
+    return this.requestV2<ListSupportedLanguagesResponse>(
+      '/video_translation.supported_languages',
       'GET'
     )
   }
@@ -22,8 +21,8 @@ export class VideoTranslationService extends BaseService {
   async translate(
     data: TranslateVideoRequest
   ): Promise<TranslateVideoResponse> {
-    return this.request<TranslateVideoResponse, TranslateVideoRequest>(
-      `${BASE_URL}/v2/video_translation.translate`,
+    return this.requestV2<TranslateVideoResponse, TranslateVideoRequest>(
+      '/video_translation.translate',
       'POST',
       data
     )
@@ -32,10 +31,10 @@ export class VideoTranslationService extends BaseService {
   async getStatus(
     videoTranslateId: string
   ): Promise<TranslationStatusResponse> {
-    return this.request<
+    return this.requestV2<
       TranslationStatusResponse,
       { video_translate_id: string }
-    >(`${BASE_URL}/v2/video_translation.get_status`, 'GET', {
+    >('/video_translation.get_status', 'GET', {
       video_translate_id: videoTranslateId
     })
   }

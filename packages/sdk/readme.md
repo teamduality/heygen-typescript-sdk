@@ -9,6 +9,18 @@ A TypeScript SDK for the Heygen API that provides a clean, typed interface for a
 - Automatic handling of API versions (v1/v2)
 - Clean, promise-based API
 
+## Roadmap
+
+The following features are planned for future releases:
+
+- Photo Avatar APIs
+  - Generate photo avatar photos
+  - Generate photo avatar looks
+  - Create and manage photo avatar groups
+  - Train photo avatar groups
+  - Add motion and sound effects
+  - Photo avatar details and upscaling
+
 ## Installation
 
 ```bash

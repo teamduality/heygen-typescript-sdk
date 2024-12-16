@@ -1,5 +1,4 @@
 import { BaseService } from './base.js'
-import { BASE_URL } from '../config/endpoints.js'
 import type {
   AvatarListData,
   AvatarGroupListData,
@@ -9,18 +8,18 @@ import type {
 
 export class AvatarsService extends BaseService {
   constructor(apiKey: string) {
-    super(apiKey, 'v2') // v2 endpoint
+    super(apiKey)
   }
 
   async list(): Promise<AvatarListData> {
-    return this.request<AvatarListData>(`${BASE_URL}/v2/avatars`, 'GET')
+    return this.requestV2<AvatarListData>('/avatars', 'GET')
   }
 
   async listGroups(
     params?: ListAvatarGroupsRequest
   ): Promise<AvatarGroupListData> {
-    return this.request<AvatarGroupListData, ListAvatarGroupsRequest>(
-      `${BASE_URL}/v2/avatar_group.list`,
+    return this.requestV2<AvatarGroupListData, ListAvatarGroupsRequest>(
+      '/avatar_group.list',
       'GET',
       params
     )

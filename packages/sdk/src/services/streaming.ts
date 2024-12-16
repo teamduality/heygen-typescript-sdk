@@ -1,5 +1,4 @@
 import { BaseService } from './base.js'
-import { BASE_URL } from '../config/endpoints.js'
 import type {
   CreateStreamingSessionRequest,
   CreateStreamingSessionResponse,
@@ -19,76 +18,76 @@ import type {
 
 export class StreamingService extends BaseService {
   constructor(apiKey: string) {
-    super(apiKey, 'v1') // v1 endpoint
+    super(apiKey)
   }
 
   async create(
     data: CreateStreamingSessionRequest
   ): Promise<CreateStreamingSessionResponse> {
-    return this.request<
+    return this.requestV1<
       CreateStreamingSessionResponse,
       CreateStreamingSessionRequest
-    >(`${BASE_URL}/v1/streaming.new`, 'POST', data)
+    >('/streaming.new', 'POST', data)
   }
 
   async start(
     data: StartStreamingSessionRequest
   ): Promise<StartStreamingSessionResponse> {
-    return this.request<
+    return this.requestV1<
       StartStreamingSessionResponse,
       StartStreamingSessionRequest
-    >(`${BASE_URL}/v1/streaming/start`, 'POST', data)
+    >('/streaming/start', 'POST', data)
   }
 
   async listSessions(): Promise<ListStreamingSessionsResponse> {
-    return this.request<ListStreamingSessionsResponse>(
-      `${BASE_URL}/v1/streaming/list`,
+    return this.requestV1<ListStreamingSessionsResponse>(
+      '/streaming/list',
       'GET'
     )
   }
 
   async submitICE(data: SubmitICERequest): Promise<SubmitICEResponse> {
-    return this.request<SubmitICEResponse, SubmitICERequest>(
-      `${BASE_URL}/v1/streaming/ice`,
+    return this.requestV1<SubmitICEResponse, SubmitICERequest>(
+      '/streaming/ice',
       'POST',
       data
     )
   }
 
   async sendTask(data: SendTaskRequest): Promise<SendTaskResponse> {
-    return this.request<SendTaskResponse, SendTaskRequest>(
-      `${BASE_URL}/v1/streaming/task`,
+    return this.requestV1<SendTaskResponse, SendTaskRequest>(
+      '/streaming/task',
       'POST',
       data
     )
   }
 
   async closeSession(data: CloseSessionRequest): Promise<CloseSessionResponse> {
-    return this.request<CloseSessionResponse, CloseSessionRequest>(
-      `${BASE_URL}/v1/streaming/stop`,
+    return this.requestV1<CloseSessionResponse, CloseSessionRequest>(
+      '/streaming/stop',
       'POST',
       data
     )
   }
 
   async interruptTask(data: InterruptTaskRequest): Promise<void> {
-    return this.request<void, InterruptTaskRequest>(
-      `${BASE_URL}/v1/streaming/interrupt`,
+    return this.requestV1<void, InterruptTaskRequest>(
+      '/streaming/interrupt',
       'POST',
       data
     )
   }
 
   async createSessionToken(): Promise<CreateSessionTokenResponse> {
-    return this.request<CreateSessionTokenResponse>(
-      `${BASE_URL}/v1/streaming/create_token`,
+    return this.requestV1<CreateSessionTokenResponse>(
+      '/streaming/create_token',
       'POST'
     )
   }
 
   async listStreamingAvatars(): Promise<ListStreamingAvatarsResponse> {
-    return this.request<ListStreamingAvatarsResponse>(
-      `${BASE_URL}/v1/streaming/avatar.list`,
+    return this.requestV1<ListStreamingAvatarsResponse>(
+      '/streaming/avatar.list',
       'GET'
     )
   }
