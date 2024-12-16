@@ -1,7 +1,7 @@
 import '../../test/mockSetup.js'
 import { describe, expect, it } from 'vitest'
 import { httpClient, APIError } from '../httpClient.js'
-import { mockFetch } from '../../test/setup.js'
+import { mockApiResponse, mockApiError, mockFetch } from '../../test/setup.js'
 
 describe('httpClient', () => {
   const testUrl = 'https://api.test.com/endpoint'
@@ -405,6 +405,113 @@ describe('httpClient', () => {
       await expect(
         httpClient(testUrl, 'GET', { apiKey: testApiKey })
       ).rejects.toThrow('Unknown error')
+    })
+  })
+
+  describe('error code handling', () => {
+    it('should handle rate limit error', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 429,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: 400123,
+              message: 'Exceed rate limit'
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      let error: unknown
+      try {
+        await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        expect.fail('Should have thrown an error')
+      } catch (e) {
+        error = e
+      }
+
+      expect(error).toBeInstanceOf(APIError)
+      expect((error as APIError).message).toBe('Exceed rate limit')
+      expect((error as APIError).code).toBe(400123)
+    })
+
+    it('should handle unauthorized error', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 401,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: 40102,
+              message: 'Unauthorized'
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      let error: unknown
+      try {
+        await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        expect.fail('Should have thrown an error')
+      } catch (e) {
+        error = e
+      }
+
+      expect(error).toBeInstanceOf(APIError)
+      expect((error as APIError).message).toBe('Unauthorized')
+      expect((error as APIError).code).toBe(40102)
+    })
+
+    const errorCases = [
+      { code: 40118, message: 'Cannot use as a template' },
+      { code: 40012400128, message: 'Invalid querying parameter' },
+      { code: 400123, message: 'Exceed rate limit' },
+      { code: 40102, message: 'Unauthorized' },
+      { code: 40056, message: 'Failed to generate audio' },
+      { code: 10001, message: 'Session state wrong: new' },
+      { code: 10002, message: 'Session state wrong: connecting' },
+      { code: 10003, message: 'Session state wrong: connected' },
+      { code: 10004, message: 'Session state wrong: closing' },
+      { code: 10005, message: 'Session state wrong: closed' },
+      { code: 10006, message: 'Session not found' },
+      { code: 10007, message: 'Concurrent limit reached' },
+      { code: 10012, message: 'Avatar not found' },
+      { code: 10013, message: 'Avatar not allowed' },
+      { code: 10014, message: 'Session full' },
+      { code: 10015, message: 'Trial API limit reached' }
+    ]
+
+    errorCases.forEach(({ code, message }) => {
+      it(`should handle error code ${code}`, async () => {
+        const mockResponse = {
+          ok: false,
+          status: 400,
+          headers: { get: () => 'application/json' },
+          text: () =>
+            Promise.resolve(
+              JSON.stringify({
+                code,
+                message: 'Original message'
+              })
+            )
+        }
+        mockFetch.mockResolvedValueOnce(mockResponse)
+
+        let error: unknown
+        try {
+          await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+          expect.fail('Should have thrown an error')
+        } catch (e) {
+          error = e
+        }
+
+        expect(error).toBeInstanceOf(APIError)
+        expect((error as APIError).message).toBe(message)
+        expect((error as APIError).code).toBe(code)
+      })
     })
   })
 })

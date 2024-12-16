@@ -16,7 +16,8 @@ export class APIError extends Error {
   constructor(
     message: string,
     public statusCode?: number,
-    public response?: unknown
+    public response?: unknown,
+    public code?: number
   ) {
     super(message)
     this.name = 'APIError'
@@ -56,7 +57,114 @@ export async function httpClient<T, P = Record<string, unknown>>(
       }
       // Handle V1 error format
       if ('code' in json) {
-        throw new APIError(json.message || 'Unknown error', json.code, json)
+        // Handle specific error codes
+        switch (json.code) {
+          case 40118:
+            throw new APIError(
+              'Cannot use as a template',
+              response.status,
+              json,
+              json.code
+            )
+          case 40012400128:
+            throw new APIError(
+              'Invalid querying parameter',
+              response.status,
+              json,
+              json.code
+            )
+          case 400123:
+            throw new APIError(
+              'Exceed rate limit',
+              response.status,
+              json,
+              json.code
+            )
+          case 40102:
+            throw new APIError('Unauthorized', response.status, json, json.code)
+          case 40056:
+            throw new APIError(
+              'Failed to generate audio',
+              response.status,
+              json,
+              json.code
+            )
+          // Streaming specific errors
+          case 10001:
+            throw new APIError(
+              'Session state wrong: new',
+              response.status,
+              json,
+              json.code
+            )
+          case 10002:
+            throw new APIError(
+              'Session state wrong: connecting',
+              response.status,
+              json,
+              json.code
+            )
+          case 10003:
+            throw new APIError(
+              'Session state wrong: connected',
+              response.status,
+              json,
+              json.code
+            )
+          case 10004:
+            throw new APIError(
+              'Session state wrong: closing',
+              response.status,
+              json,
+              json.code
+            )
+          case 10005:
+            throw new APIError(
+              'Session state wrong: closed',
+              response.status,
+              json,
+              json.code
+            )
+          case 10006:
+            throw new APIError(
+              'Session not found',
+              response.status,
+              json,
+              json.code
+            )
+          case 10007:
+            throw new APIError(
+              'Concurrent limit reached',
+              response.status,
+              json,
+              json.code
+            )
+          case 10012:
+            throw new APIError(
+              'Avatar not found',
+              response.status,
+              json,
+              json.code
+            )
+          case 10013:
+            throw new APIError(
+              'Avatar not allowed',
+              response.status,
+              json,
+              json.code
+            )
+          case 10014:
+            throw new APIError('Session full', response.status, json, json.code)
+          case 10015:
+            throw new APIError(
+              'Trial API limit reached',
+              response.status,
+              json,
+              json.code
+            )
+          default:
+            throw new APIError(json.message || 'Unknown error', json.code, json)
+        }
       }
       // Fallback error
       throw new APIError('Unknown error', response.status, json)

@@ -105,18 +105,37 @@ The following API features are not yet implemented in this SDK:
 
 ## Error Handling
 
-The SDK provides consistent error handling across all services:
+The SDK provides detailed error handling with HeyGen-specific error codes:
 
 ```typescript
 try {
   await sdk.videos.generation.create({ ... })
 } catch (error) {
   if (error instanceof APIError) {
-    console.error(`API Error (${error.statusCode}):`, error.message)
+    console.error(`API Error (Code ${error.code}):`, error.message)
+    console.error('HTTP Status:', error.statusCode)
     console.error('Response:', error.response)
   }
 }
 ```
+
+Common error codes:
+
+- 40118: Cannot use as a template
+- 40012400128: Invalid querying parameter
+- 400123: Exceed rate limit
+- 40102: Unauthorized
+- 40056: Failed to generate audio
+
+Streaming-specific error codes:
+
+- 10001-10005: Session state errors
+- 10006: Session not found
+- 10007: Concurrent limit reached
+- 10012: Avatar not found
+- 10013: Avatar not allowed
+- 10014: Session full
+- 10015: Trial API limit reached
 
 ## File Uploads
 
