@@ -32,7 +32,7 @@ export class TemplatesService extends BaseService {
       GenerateFromTemplateRequest
     >(`/templates/${templateId}/generate`, {
       method: 'POST',
-      params: data
+      body: data
     })
   }
 }

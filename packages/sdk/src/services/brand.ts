@@ -1,4 +1,5 @@
 import { BaseService } from './base.js'
+import type { QueryParams } from './base.js'
 import type {
   ListBrandVoicesRequest,
   ListBrandVoicesResponse
@@ -12,12 +13,9 @@ export class BrandService extends BaseService {
   async listVoices(
     params?: ListBrandVoicesRequest
   ): Promise<ListBrandVoicesResponse> {
-    return this.requestV2<ListBrandVoicesResponse, ListBrandVoicesRequest>(
-      '/brand_voice/list',
-      {
-        method: 'GET',
-        params
-      }
-    )
+    return this.requestV2<ListBrandVoicesResponse>('/brand_voice/list', {
+      method: 'GET',
+      queryParams: params as QueryParams
+    })
   }
 }

@@ -1,4 +1,5 @@
 import { BaseService } from './base.js'
+import type { QueryParams } from './base.js'
 import type {
   AvatarListData,
   AvatarGroupListData,
@@ -19,12 +20,9 @@ export class AvatarsService extends BaseService {
   async listGroups(
     params?: ListAvatarGroupsRequest
   ): Promise<AvatarGroupListData> {
-    return this.requestV2<AvatarGroupListData, ListAvatarGroupsRequest>(
-      '/avatar_group.list',
-      {
-        method: 'GET',
-        params
-      }
-    )
+    return this.requestV2<AvatarGroupListData>('/avatar_group.list', {
+      method: 'GET',
+      queryParams: params as QueryParams
+    })
   }
 }

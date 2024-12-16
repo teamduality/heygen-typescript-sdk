@@ -1,5 +1,10 @@
 import { BaseService } from './base.js'
-import type { CreateVideoRequest, CreateVideoResponse } from '../types/index.js'
+import type { QueryParams } from './base.js'
+import type {
+  CreateVideoRequest,
+  CreateVideoResponse,
+  VideoDetailsResponse
+} from '../types/index.js'
 
 export class VideoGenerationService extends BaseService {
   constructor(apiKey: string) {
@@ -7,21 +12,26 @@ export class VideoGenerationService extends BaseService {
   }
 
   async create(data: CreateVideoRequest): Promise<CreateVideoResponse> {
-    return this.requestV2<CreateVideoResponse, CreateVideoRequest>('/videos', {
-      method: 'POST',
-      params: data
+    return this.requestV2<CreateVideoResponse, CreateVideoRequest>(
+      '/video/generate',
+      {
+        method: 'POST',
+        body: data
+      }
+    )
+  }
+
+  async get(videoId: string): Promise<VideoDetailsResponse> {
+    return this.requestV1<VideoDetailsResponse>('/video_status.get', {
+      method: 'GET',
+      queryParams: { video_id: videoId } as QueryParams
     })
   }
 
-  async get(videoId: string) {
-    return this.requestV2<CreateVideoResponse>(`/videos/${videoId}`, {
-      method: 'GET'
-    })
-  }
-
-  async delete(videoId: string) {
-    return this.requestV2<void>(`/videos/${videoId}`, {
-      method: 'DELETE'
+  async delete(videoId: string): Promise<void> {
+    return this.requestV1<void>('/video.delete', {
+      method: 'DELETE',
+      queryParams: { video_id: videoId } as QueryParams
     })
   }
 }

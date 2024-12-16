@@ -29,7 +29,7 @@ export class StreamingService extends BaseService {
       CreateStreamingSessionRequest
     >('/streaming.new', {
       method: 'POST',
-      params: data
+      body: data
     })
   }
 
@@ -39,58 +39,58 @@ export class StreamingService extends BaseService {
     return this.requestV1<
       StartStreamingSessionResponse,
       StartStreamingSessionRequest
-    >('/streaming/start', {
+    >('/streaming.start', {
       method: 'POST',
-      params: data
+      body: data
     })
   }
 
   async listSessions(): Promise<ListStreamingSessionsResponse> {
-    return this.requestV1<ListStreamingSessionsResponse>('/streaming/list', {
+    return this.requestV1<ListStreamingSessionsResponse>('/streaming.list', {
       method: 'GET'
     })
   }
 
   async submitICE(data: SubmitICERequest): Promise<SubmitICEResponse> {
     return this.requestV1<SubmitICEResponse, SubmitICERequest>(
-      '/streaming/ice',
+      '/streaming.ice',
       {
         method: 'POST',
-        params: data
+        body: data
       }
     )
   }
 
   async sendTask(data: SendTaskRequest): Promise<SendTaskResponse> {
     return this.requestV1<SendTaskResponse, SendTaskRequest>(
-      '/streaming/task',
+      '/streaming.task',
       {
         method: 'POST',
-        params: data
+        body: data
       }
     )
   }
 
   async closeSession(data: CloseSessionRequest): Promise<CloseSessionResponse> {
     return this.requestV1<CloseSessionResponse, CloseSessionRequest>(
-      '/streaming/stop',
+      '/streaming.stop',
       {
         method: 'POST',
-        params: data
+        body: data
       }
     )
   }
 
   async interruptTask(data: InterruptTaskRequest): Promise<void> {
-    return this.requestV1<void, InterruptTaskRequest>('/streaming/interrupt', {
+    return this.requestV1<void, InterruptTaskRequest>('/streaming.interrupt', {
       method: 'POST',
-      params: data
+      body: data
     })
   }
 
   async createSessionToken(): Promise<CreateSessionTokenResponse> {
     return this.requestV1<CreateSessionTokenResponse>(
-      '/streaming/create_token',
+      '/streaming.create_token',
       {
         method: 'POST'
       }
