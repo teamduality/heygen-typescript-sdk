@@ -1,12 +1,37 @@
 import { listAvatars } from './services/avatars.js'
 import { listVoices } from './services/voices.js'
 import { createVideo, getVideoDetails, deleteVideo } from './services/videos.js'
+import {
+  createStreamingSession,
+  startStreamingSession,
+  listStreamingSessions,
+  submitICE,
+  sendTask,
+  closeSession,
+  interruptTask,
+  createSessionToken,
+  listStreamingAvatars
+} from './services/streaming.js'
 
 import type {
   CreateVideoRequest,
   CreateVideoResponse,
   ListAvatarsResponse,
-  ListVoicesResponse
+  ListVoicesResponse,
+  CreateStreamingSessionRequest,
+  CreateStreamingSessionResponse,
+  StartStreamingSessionRequest,
+  StartStreamingSessionResponse,
+  ListStreamingSessionsResponse,
+  SubmitICERequest,
+  SubmitICEResponse,
+  SendTaskRequest,
+  SendTaskResponse,
+  CloseSessionRequest,
+  CloseSessionResponse,
+  InterruptTaskRequest,
+  CreateSessionTokenResponse,
+  ListStreamingAvatarsResponse
 } from './types/index.js'
 
 export class HeygenSDK {
@@ -36,6 +61,46 @@ export class HeygenSDK {
 
   async deleteVideo(videoId: string) {
     return deleteVideo(this.apiKey, videoId)
+  }
+
+  async createStreamingSession(
+    data: CreateStreamingSessionRequest
+  ): Promise<CreateStreamingSessionResponse> {
+    return createStreamingSession(this.apiKey, data)
+  }
+
+  async startStreamingSession(
+    data: StartStreamingSessionRequest
+  ): Promise<StartStreamingSessionResponse> {
+    return startStreamingSession(this.apiKey, data)
+  }
+
+  async listStreamingSessions(): Promise<ListStreamingSessionsResponse> {
+    return listStreamingSessions(this.apiKey)
+  }
+
+  async submitICE(data: SubmitICERequest): Promise<SubmitICEResponse> {
+    return submitICE(this.apiKey, data)
+  }
+
+  async sendTask(data: SendTaskRequest): Promise<SendTaskResponse> {
+    return sendTask(this.apiKey, data)
+  }
+
+  async closeSession(data: CloseSessionRequest): Promise<CloseSessionResponse> {
+    return closeSession(this.apiKey, data)
+  }
+
+  async interruptTask(data: InterruptTaskRequest): Promise<void> {
+    return interruptTask(this.apiKey, data)
+  }
+
+  async createSessionToken(): Promise<CreateSessionTokenResponse> {
+    return createSessionToken(this.apiKey)
+  }
+
+  async listStreamingAvatars(): Promise<ListStreamingAvatarsResponse> {
+    return listStreamingAvatars(this.apiKey)
   }
 }
 

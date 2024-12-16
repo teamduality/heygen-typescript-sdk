@@ -15,3 +15,31 @@ export type {
   ImageBackground,
   VideoBackground
 } from './video.js'
+export type {
+  CreateStreamingSessionRequest,
+  CreateStreamingSessionResponse,
+  StreamingQuality,
+  VideoEncoding,
+  EmotionType,
+  VoiceSetting,
+  ICEServer,
+  SDP,
+  StartStreamingSessionRequest,
+  StartStreamingSessionResponse,
+  SessionStatus,
+  StreamingSession,
+  ListStreamingSessionsResponse,
+  ICECandidate,
+  SubmitICERequest,
+  SubmitICEResponse,
+  TaskMode,
+  TaskType,
+  SendTaskRequest,
+  SendTaskResponse,
+  CloseSessionRequest,
+  CloseSessionResponse,
+  InterruptTaskRequest,
+  CreateSessionTokenResponse,
+  StreamingAvatarData,
+  ListStreamingAvatarsResponse
+} from './streaming.js'
