@@ -3,5 +3,5 @@ import { httpClient } from '../utils/httpClient.js'
 import type { ListVoicesResponse } from '../types/voice.js'
 
 export async function listVoices(apiKey: string): Promise<ListVoicesResponse> {
-  return httpClient(`${BASE_URL}/voices`, 'GET', { apiKey })
+  return httpClient(`${BASE_URL}/v2/voices`, 'GET', { apiKey })
 }

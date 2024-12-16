@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://api.heygen.com/v2'
+export const BASE_URL = 'https://api.heygen.com'

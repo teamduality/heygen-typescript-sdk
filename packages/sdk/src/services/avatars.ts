@@ -6,5 +6,5 @@ import type { ListAvatarsResponse } from '../types/avatar.js'
 export async function listAvatars(
   apiKey: string
 ): Promise<ListAvatarsResponse> {
-  return httpClient(`${BASE_URL}/avatars`, 'GET', { apiKey })
+  return httpClient(`${BASE_URL}/v2/avatars`, 'GET', { apiKey })
 }

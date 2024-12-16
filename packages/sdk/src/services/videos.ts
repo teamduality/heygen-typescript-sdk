@@ -11,7 +11,7 @@ export async function createVideo(
   apiKey: string,
   videoData: CreateVideoRequest
 ): Promise<CreateVideoResponse> {
-  return httpClient(`${BASE_URL}/video/generate`, 'POST', {
+  return httpClient(`${BASE_URL}/v2/video/generate`, 'POST', {
     ...videoData,
     apiKey
   })
@@ -21,7 +21,7 @@ export async function getVideoDetails(
   apiKey: string,
   videoId: string
 ): Promise<VideoDetailsResponse> {
-  return httpClient(`${BASE_URL}/video/status`, 'GET', {
+  return httpClient(`${BASE_URL}/v1/video/status`, 'GET', {
     video_id: videoId,
     apiKey
   })
@@ -31,7 +31,7 @@ export async function deleteVideo(
   apiKey: string,
   videoId: string
 ): Promise<any> {
-  return httpClient(`${BASE_URL}/video?video_id=${videoId}`, 'DELETE', {
+  return httpClient(`${BASE_URL}/v1/video?video_id=${videoId}`, 'DELETE', {
     apiKey
   })
 }
