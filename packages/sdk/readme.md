@@ -106,3 +106,32 @@ import { VideoGenerationService } from '@heygen/sdk'
 const videoService = new VideoGenerationService('your-api-key')
 await videoService.create({ ... })
 ```
+
+### Asset Upload
+
+```typescript
+import { HeygenSDK } from '@heygen/sdk'
+import { readFileSync } from 'fs'
+
+const sdk = new HeygenSDK('your-api-key')
+
+// Upload an image
+const imageFile = readFileSync('path/to/image.jpg')
+const imageAsset = await sdk.assets.upload(imageFile, 'image/jpeg')
+console.log('Uploaded image asset ID:', imageAsset.id)
+
+// Upload a video
+const videoFile = readFileSync('path/to/video.mp4')
+const videoAsset = await sdk.assets.upload(videoFile, 'video/mp4')
+console.log('Uploaded video asset ID:', videoAsset.id)
+
+// Browser example using Fetch
+const file = await fetch('https://example.com/image.jpg').then((r) => r.blob())
+const asset = await sdk.assets.upload(file, 'image/jpeg')
+```
+
+Supported content types:
+
+- Images: `image/jpeg`, `image/png`
+- Videos: `video/mp4`, `video/webm`
+- Audio: `audio/mpeg`
