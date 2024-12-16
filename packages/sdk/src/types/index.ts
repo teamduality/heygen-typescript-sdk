@@ -53,3 +53,12 @@ export type {
   StreamingAvatarData,
   ListStreamingAvatarsResponse
 } from './streaming.js'
+export type {
+  Template,
+  ListTemplatesResponse,
+  TemplateVariable,
+  TemplateVariableProperties,
+  GetTemplateResponse,
+  GenerateFromTemplateRequest,
+  GenerateFromTemplateResponse
+} from './template.js'

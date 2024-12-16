@@ -18,6 +18,11 @@ import {
   translateVideo,
   getTranslationStatus
 } from './services/video-translation.js'
+import {
+  listTemplates,
+  getTemplate,
+  generateFromTemplate
+} from './services/templates.js'
 
 import type {
   CreateVideoRequest,
@@ -43,7 +48,11 @@ import type {
   ListSupportedLanguagesResponse,
   TranslateVideoRequest,
   TranslateVideoResponse,
-  TranslationStatusResponse
+  TranslationStatusResponse,
+  ListTemplatesResponse,
+  GetTemplateResponse,
+  GenerateFromTemplateRequest,
+  GenerateFromTemplateResponse
 } from './types/index.js'
 
 export class HeygenSDK {
@@ -52,6 +61,7 @@ export class HeygenSDK {
   public videos: VideoAPI
   public avatars: AvatarAPI
   public voices: VoiceAPI
+  public templates: TemplatesAPI
 
   constructor(apiKey: string) {
     this.apiKey = apiKey
@@ -59,6 +69,7 @@ export class HeygenSDK {
     this.videos = new VideoAPI(apiKey)
     this.avatars = new AvatarAPI(apiKey)
     this.voices = new VoiceAPI(apiKey)
+    this.templates = new TemplatesAPI(apiKey)
   }
 }
 
@@ -175,6 +186,25 @@ export class VoiceAPI {
 
   async list(): Promise<ListVoicesResponse> {
     return listVoices(this.apiKey)
+  }
+}
+
+class TemplatesAPI {
+  constructor(protected readonly apiKey: string) {}
+
+  async list(): Promise<ListTemplatesResponse> {
+    return listTemplates(this.apiKey)
+  }
+
+  async get(templateId: string): Promise<GetTemplateResponse> {
+    return getTemplate(this.apiKey, templateId)
+  }
+
+  async generate(
+    templateId: string,
+    data?: GenerateFromTemplateRequest
+  ): Promise<GenerateFromTemplateResponse> {
+    return generateFromTemplate(this.apiKey, templateId, data)
   }
 }
 
