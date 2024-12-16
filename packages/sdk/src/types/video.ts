@@ -163,3 +163,15 @@ export interface TranslationStatusResponse {
     message: string | null
   }
 }
+
+export interface CreateWebMVideoRequest {
+  avatar_pose_id?: string
+  avatar_style?: 'normal' | 'circle' | 'closeUp' | 'voiceOnly'
+  input_text?: string
+  voice_id?: string
+  input_audio?: string
+}
+
+export interface CreateWebMVideoResponse {
+  video_id: string
+}

@@ -3,7 +3,9 @@ import type { QueryParams } from './base.js'
 import type {
   CreateVideoRequest,
   CreateVideoResponse,
-  VideoDetailsResponse
+  VideoDetailsResponse,
+  CreateWebMVideoRequest,
+  CreateWebMVideoResponse
 } from '../types/index.js'
 
 export class VideoGenerationService extends BaseService {
@@ -33,5 +35,17 @@ export class VideoGenerationService extends BaseService {
       method: 'DELETE',
       queryParams: { video_id: videoId } as QueryParams
     })
+  }
+
+  async createWebM(
+    data: CreateWebMVideoRequest
+  ): Promise<CreateWebMVideoResponse> {
+    return this.requestV1<CreateWebMVideoResponse, CreateWebMVideoRequest>(
+      '/video.webm',
+      {
+        method: 'POST',
+        body: data
+      }
+    )
   }
 }
