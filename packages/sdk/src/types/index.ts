@@ -71,3 +71,8 @@ export type {
   GenerateFromTemplateRequest,
   GenerateFromTemplateResponse
 } from './template.js'
+export type {
+  BrandVoice,
+  ListBrandVoicesRequest,
+  ListBrandVoicesResponse
+} from './brand.js'

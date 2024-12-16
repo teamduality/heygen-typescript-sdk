@@ -6,6 +6,7 @@ import { VideoManagementService } from './services/video-management.js'
 import { VideoTranslationService } from './services/video-translation.js'
 import { TemplatesService } from './services/templates.js'
 import { UserService } from './services/user.js'
+import { BrandService } from './services/brand.js'
 
 // Export types
 export type {
@@ -23,6 +24,7 @@ export class HeygenSDK {
   public voices: VoicesService
   public templates: TemplatesService
   public user: UserService
+  public brand: BrandService
 
   constructor(apiKey: string) {
     this.apiKey = apiKey
@@ -32,6 +34,7 @@ export class HeygenSDK {
     this.voices = new VoicesService(apiKey)
     this.templates = new TemplatesService(apiKey)
     this.user = new UserService(apiKey)
+    this.brand = new BrandService(apiKey)
   }
 }
 
@@ -56,7 +59,8 @@ export {
   VideoManagementService,
   VideoTranslationService,
   TemplatesService,
-  UserService
+  UserService,
+  BrandService
 }
 
 // Export types
