@@ -1,4 +1,8 @@
-import { listAvatars } from './services/avatars.js'
+import {
+  listAvatars,
+  listAvatarGroups,
+  listAvatarsInGroup
+} from './services/avatars.js'
 import { listVoices } from './services/voices.js'
 import { createVideo, getVideoDetails, deleteVideo } from './services/videos.js'
 import {
@@ -52,7 +56,10 @@ import type {
   ListTemplatesResponse,
   GetTemplateResponse,
   GenerateFromTemplateRequest,
-  GenerateFromTemplateResponse
+  GenerateFromTemplateResponse,
+  ListAvatarGroupsRequest,
+  ListAvatarGroupsResponse,
+  ListAvatarsInGroupResponse
 } from './types/index.js'
 
 export class HeygenSDK {
@@ -178,6 +185,16 @@ export class AvatarAPI {
 
   async list(): Promise<ListAvatarsResponse> {
     return listAvatars(this.apiKey)
+  }
+
+  async listGroups(
+    params?: ListAvatarGroupsRequest
+  ): Promise<ListAvatarGroupsResponse> {
+    return listAvatarGroups(this.apiKey, params)
+  }
+
+  async listInGroup(groupId: string): Promise<ListAvatarsInGroupResponse> {
+    return listAvatarsInGroup(this.apiKey, groupId)
   }
 }
 

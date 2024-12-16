@@ -1,4 +1,13 @@
-export type { Avatar, ListAvatarsResponse } from './avatar.js'
+export type {
+  Avatar,
+  ListAvatarsResponse,
+  GroupType,
+  TrainStatus,
+  AvatarGroup,
+  ListAvatarGroupsRequest,
+  ListAvatarGroupsResponse,
+  ListAvatarsInGroupResponse
+} from './avatar.js'
 export type { Voice, ListVoicesResponse } from './voice.js'
 export type {
   CreateVideoRequest,
