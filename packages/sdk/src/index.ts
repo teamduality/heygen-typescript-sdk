@@ -8,6 +8,8 @@ import { TemplatesService } from './services/templates.js'
 import { UserService } from './services/user.js'
 import { BrandService } from './services/brand.js'
 import { AssetService } from './services/asset.js'
+import { TalkingPhotoService } from './services/talking-photo.js'
+import { AIAPI } from './services/ai.js'
 
 // Export types
 export type {
@@ -27,6 +29,7 @@ export class HeygenSDK {
   public user: UserService
   public brand: BrandService
   public assets: AssetService
+  public ai: AIAPI
 
   constructor(apiKey: string) {
     this.apiKey = apiKey
@@ -38,6 +41,7 @@ export class HeygenSDK {
     this.user = new UserService(apiKey)
     this.brand = new BrandService(apiKey)
     this.assets = new AssetService(apiKey)
+    this.ai = new AIAPI(apiKey)
   }
 }
 
@@ -64,10 +68,10 @@ export {
   TemplatesService,
   UserService,
   BrandService,
-  AssetService
+  AssetService,
+  TalkingPhotoService,
+  AIAPI
 }
 
 // Export types
 export * from './types/index.js'
-export * from './types/avatar.js'
-export * from './types/voice.js'
