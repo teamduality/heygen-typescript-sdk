@@ -44,21 +44,51 @@ export async function httpClient<T, P = Record<string, unknown>>(
   }
 
   const response = await fetch(url, options)
-  const json = (await response.json()) as V1Response<T>
 
-  if (!response.ok) {
-    throw new APIError(
-      `HTTP error! status: ${response.status}`,
-      response.status,
-      json
-    )
-  }
+  try {
+    const text = await response.text()
+    const json = JSON.parse(text)
 
-  if (json.code !== 100) {
+    if (!response.ok) {
+      // Handle V2 error format
+      if ('error' in json) {
+        throw new APIError(json.error || 'Unknown error', response.status, json)
+      }
+      // Handle V1 error format
+      if ('code' in json) {
+        throw new APIError(json.message || 'Unknown error', json.code, json)
+      }
+      // Fallback error
+      throw new APIError(
+        `HTTP error! status: ${response.status}`,
+        response.status,
+        json
+      )
+    }
+
+    // Handle V2 success format
+    if ('error' in json) {
+      return json.data
+    }
+    // Handle V1 success format
+    if (json.code === 100) {
+      return json.data
+    }
+    // Handle V1 error in success response
     throw new APIError(json.message || 'Unknown error', json.code, json)
+  } catch (error) {
+    if (error instanceof APIError) {
+      throw error
+    }
+    // Handle non-JSON responses
+    if (!response.ok) {
+      throw new APIError(
+        `Request failed with status ${response.status}`,
+        response.status
+      )
+    }
+    throw error
   }
-
-  return json.data
 }
 
 // Export aliases for versioned clients
