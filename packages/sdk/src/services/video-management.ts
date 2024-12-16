@@ -1,13 +1,17 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
 import type { ListVideosRequest, ListVideosResponse } from '../types/video.js'
 
-export async function listVideos(
-  apiKey: string,
-  params?: ListVideosRequest
-): Promise<ListVideosResponse> {
-  return httpClient(`${BASE_URL}/v1/video.list`, 'GET', {
-    apiKey,
-    ...params
-  })
+export class VideoManagementService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v2')
+  }
+
+  async list(params?: ListVideosRequest): Promise<ListVideosResponse> {
+    return this.request<ListVideosResponse, ListVideosRequest>(
+      `${BASE_URL}/v2/videos`,
+      'GET',
+      params
+    )
+  }
 }

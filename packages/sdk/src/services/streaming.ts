@@ -1,5 +1,5 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
 import type {
   CreateStreamingSessionRequest,
   CreateStreamingSessionResponse,
@@ -17,80 +17,79 @@ import type {
   ListStreamingAvatarsResponse
 } from '../types/streaming.js'
 
-export async function createStreamingSession(
-  apiKey: string,
-  data: CreateStreamingSessionRequest
-): Promise<CreateStreamingSessionResponse> {
-  return httpClient(`${BASE_URL}/streaming/sessions`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+export class StreamingService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v1') // v1 endpoint
+  }
 
-export async function startStreamingSession(
-  apiKey: string,
-  data: StartStreamingSessionRequest
-): Promise<StartStreamingSessionResponse> {
-  return httpClient(`${BASE_URL}/streaming/start`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+  async create(
+    data: CreateStreamingSessionRequest
+  ): Promise<CreateStreamingSessionResponse> {
+    return this.request<
+      CreateStreamingSessionResponse,
+      CreateStreamingSessionRequest
+    >(`${BASE_URL}/v1/streaming.new`, 'POST', data)
+  }
 
-export async function listStreamingSessions(
-  apiKey: string
-): Promise<ListStreamingSessionsResponse> {
-  return httpClient(`${BASE_URL}/streaming/list`, 'GET', { apiKey })
-}
+  async start(
+    data: StartStreamingSessionRequest
+  ): Promise<StartStreamingSessionResponse> {
+    return this.request<
+      StartStreamingSessionResponse,
+      StartStreamingSessionRequest
+    >(`${BASE_URL}/v1/streaming/start`, 'POST', data)
+  }
 
-export async function submitICE(
-  apiKey: string,
-  data: SubmitICERequest
-): Promise<SubmitICEResponse> {
-  return httpClient(`${BASE_URL}/streaming/ice`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+  async listSessions(): Promise<ListStreamingSessionsResponse> {
+    return this.request<ListStreamingSessionsResponse>(
+      `${BASE_URL}/v1/streaming/list`,
+      'GET'
+    )
+  }
 
-export async function sendTask(
-  apiKey: string,
-  data: SendTaskRequest
-): Promise<SendTaskResponse> {
-  return httpClient(`${BASE_URL}/streaming/task`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+  async submitICE(data: SubmitICERequest): Promise<SubmitICEResponse> {
+    return this.request<SubmitICEResponse, SubmitICERequest>(
+      `${BASE_URL}/v1/streaming/ice`,
+      'POST',
+      data
+    )
+  }
 
-export async function closeSession(
-  apiKey: string,
-  data: CloseSessionRequest
-): Promise<CloseSessionResponse> {
-  return httpClient(`${BASE_URL}/streaming/stop`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+  async sendTask(data: SendTaskRequest): Promise<SendTaskResponse> {
+    return this.request<SendTaskResponse, SendTaskRequest>(
+      `${BASE_URL}/v1/streaming/task`,
+      'POST',
+      data
+    )
+  }
 
-export async function interruptTask(
-  apiKey: string,
-  data: InterruptTaskRequest
-): Promise<void> {
-  return httpClient(`${BASE_URL}/streaming/interrupt`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+  async closeSession(data: CloseSessionRequest): Promise<CloseSessionResponse> {
+    return this.request<CloseSessionResponse, CloseSessionRequest>(
+      `${BASE_URL}/v1/streaming/stop`,
+      'POST',
+      data
+    )
+  }
 
-export async function createSessionToken(
-  apiKey: string
-): Promise<CreateSessionTokenResponse> {
-  return httpClient(`${BASE_URL}/streaming/create_token`, 'POST', { apiKey })
-}
+  async interruptTask(data: InterruptTaskRequest): Promise<void> {
+    return this.request<void, InterruptTaskRequest>(
+      `${BASE_URL}/v1/streaming/interrupt`,
+      'POST',
+      data
+    )
+  }
 
-export async function listStreamingAvatars(
-  apiKey: string
-): Promise<ListStreamingAvatarsResponse> {
-  return httpClient(`${BASE_URL}/streaming/avatar.list`, 'GET', { apiKey })
+  async createSessionToken(): Promise<CreateSessionTokenResponse> {
+    return this.request<CreateSessionTokenResponse>(
+      `${BASE_URL}/v1/streaming/create_token`,
+      'POST'
+    )
+  }
+
+  async listStreamingAvatars(): Promise<ListStreamingAvatarsResponse> {
+    return this.request<ListStreamingAvatarsResponse>(
+      `${BASE_URL}/v1/streaming/avatar.list`,
+      'GET'
+    )
+  }
 }

@@ -1,7 +1,13 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
 import type { ListVoicesResponse } from '../types/voice.js'
 
-export async function listVoices(apiKey: string): Promise<ListVoicesResponse> {
-  return httpClient(`${BASE_URL}/v2/voices`, 'GET', { apiKey })
+export class VoicesService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v2')
+  }
+
+  async list(): Promise<ListVoicesResponse> {
+    return this.request<ListVoicesResponse>(`${BASE_URL}/v2/voices`, 'GET')
+  }
 }

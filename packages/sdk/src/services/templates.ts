@@ -1,5 +1,5 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
 import type {
   ListTemplatesResponse,
   GetTemplateResponse,
@@ -7,26 +7,32 @@ import type {
   GenerateFromTemplateResponse
 } from '../types/template.js'
 
-export async function listTemplates(
-  apiKey: string
-): Promise<ListTemplatesResponse> {
-  return httpClient(`${BASE_URL}/v2/templates`, 'GET', { apiKey })
-}
+export class TemplatesService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v2')
+  }
 
-export async function getTemplate(
-  apiKey: string,
-  templateId: string
-): Promise<GetTemplateResponse> {
-  return httpClient(`${BASE_URL}/v2/template/${templateId}`, 'GET', { apiKey })
-}
+  async list(): Promise<ListTemplatesResponse> {
+    return this.request<ListTemplatesResponse>(
+      `${BASE_URL}/v2/templates`,
+      'GET'
+    )
+  }
 
-export async function generateFromTemplate(
-  apiKey: string,
-  templateId: string,
-  data?: GenerateFromTemplateRequest
-): Promise<GenerateFromTemplateResponse> {
-  return httpClient(`${BASE_URL}/v2/template/${templateId}/generate`, 'POST', {
-    apiKey,
-    ...data
-  })
+  async get(templateId: string): Promise<GetTemplateResponse> {
+    return this.request<GetTemplateResponse>(
+      `${BASE_URL}/v2/templates/${templateId}`,
+      'GET'
+    )
+  }
+
+  async generate(
+    templateId: string,
+    data?: GenerateFromTemplateRequest
+  ): Promise<GenerateFromTemplateResponse> {
+    return this.request<
+      GenerateFromTemplateResponse,
+      GenerateFromTemplateRequest
+    >(`${BASE_URL}/v2/templates/${templateId}/generate`, 'POST', data)
+  }
 }

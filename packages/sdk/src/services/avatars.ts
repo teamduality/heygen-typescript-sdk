@@ -1,34 +1,28 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
-
 import type {
-  ListAvatarsResponse,
-  ListAvatarGroupsRequest,
-  ListAvatarGroupsResponse,
-  ListAvatarsInGroupResponse
+  AvatarListData,
+  AvatarGroupListData,
+  AvatarGroupData,
+  ListAvatarGroupsRequest
 } from '../types/avatar.js'
 
-export async function listAvatars(
-  apiKey: string
-): Promise<ListAvatarsResponse> {
-  return httpClient(`${BASE_URL}/v2/avatars`, 'GET', { apiKey })
-}
+export class AvatarsService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v2') // v2 endpoint
+  }
 
-export async function listAvatarGroups(
-  apiKey: string,
-  params?: ListAvatarGroupsRequest
-): Promise<ListAvatarGroupsResponse> {
-  return httpClient(`${BASE_URL}/v2/avatar_group.list`, 'GET', {
-    apiKey,
-    ...params
-  })
-}
+  async list(): Promise<AvatarListData> {
+    return this.request<AvatarListData>(`${BASE_URL}/v2/avatars`, 'GET')
+  }
 
-export async function listAvatarsInGroup(
-  apiKey: string,
-  groupId: string
-): Promise<ListAvatarsInGroupResponse> {
-  return httpClient(`${BASE_URL}/v2/avatar_group/${groupId}/avatars`, 'GET', {
-    apiKey
-  })
+  async listGroups(
+    params?: ListAvatarGroupsRequest
+  ): Promise<AvatarGroupListData> {
+    return this.request<AvatarGroupListData, ListAvatarGroupsRequest>(
+      `${BASE_URL}/v2/avatar_group.list`,
+      'GET',
+      params
+    )
+  }
 }

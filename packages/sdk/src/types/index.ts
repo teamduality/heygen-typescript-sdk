@@ -1,12 +1,12 @@
 export type {
   Avatar,
-  ListAvatarsResponse,
+  AvatarListData,
+  AvatarGroupListData,
+  AvatarGroupData,
   GroupType,
   TrainStatus,
   AvatarGroup,
-  ListAvatarGroupsRequest,
-  ListAvatarGroupsResponse,
-  ListAvatarsInGroupResponse
+  ListAvatarGroupsRequest
 } from './avatar.js'
 export type { Voice, ListVoicesResponse } from './voice.js'
 export type {

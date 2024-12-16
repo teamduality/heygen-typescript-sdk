@@ -1,37 +1,28 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
+import type { CreateVideoRequest, CreateVideoResponse } from '../types/video.js'
 
-import type {
-  CreateVideoRequest,
-  CreateVideoResponse,
-  VideoDetailsResponse
-} from '../types/video.js'
+export class VideoGenerationService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v2')
+  }
 
-export async function createVideo(
-  apiKey: string,
-  videoData: CreateVideoRequest
-): Promise<CreateVideoResponse> {
-  return httpClient(`${BASE_URL}/v2/video/generate`, 'POST', {
-    ...videoData,
-    apiKey
-  })
-}
+  async create(data: CreateVideoRequest): Promise<CreateVideoResponse> {
+    return this.request<CreateVideoResponse, CreateVideoRequest>(
+      `${BASE_URL}/v2/videos`,
+      'POST',
+      data
+    )
+  }
 
-export async function getVideoDetails(
-  apiKey: string,
-  videoId: string
-): Promise<VideoDetailsResponse> {
-  return httpClient(`${BASE_URL}/v1/video/status`, 'GET', {
-    video_id: videoId,
-    apiKey
-  })
-}
+  async get(videoId: string) {
+    return this.request<CreateVideoResponse>(
+      `${BASE_URL}/v2/videos/${videoId}`,
+      'GET'
+    )
+  }
 
-export async function deleteVideo(
-  apiKey: string,
-  videoId: string
-): Promise<any> {
-  return httpClient(`${BASE_URL}/v1/video?video_id=${videoId}`, 'DELETE', {
-    apiKey
-  })
+  async delete(videoId: string) {
+    return this.request<void>(`${BASE_URL}/v2/videos/${videoId}`, 'DELETE')
+  }
 }

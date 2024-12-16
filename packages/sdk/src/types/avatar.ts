@@ -12,9 +12,24 @@ export interface TalkingPhoto {
   preview_image_url: string
 }
 
-export interface ListAvatarsResponse {
+// Internal type used by httpClient
+interface ApiResponse<T> {
+  error: string | null
+  data: T
+}
+
+export interface AvatarListData {
   avatars: Avatar[]
   talking_photos: TalkingPhoto[]
+}
+
+export interface AvatarGroupListData {
+  total_count: number
+  avatar_group_list: AvatarGroup[]
+}
+
+export interface AvatarGroupData {
+  avatar_list: Avatar[]
 }
 
 export type GroupType = 'PUBLIC_PHOTO' | 'PRIVATE'
@@ -30,21 +45,6 @@ export interface AvatarGroup {
   train_status: TrainStatus
 }
 
-export interface ListAvatarGroupsRequest {
+export interface ListAvatarGroupsRequest extends Record<string, unknown> {
   include_public?: boolean
-}
-
-export interface ListAvatarGroupsResponse {
-  error: null
-  data: {
-    total_count: number
-    avatar_group_list: AvatarGroup[]
-  }
-}
-
-export interface ListAvatarsInGroupResponse {
-  error: null
-  data: {
-    avatar_list: Avatar[]
-  }
 }

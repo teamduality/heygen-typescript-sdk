@@ -1,5 +1,5 @@
+import { BaseService } from './base.js'
 import { BASE_URL } from '../config/endpoints.js'
-import { httpClient } from '../utils/httpClient.js'
 import type {
   ListSupportedLanguagesResponse,
   TranslateVideoRequest,
@@ -7,31 +7,36 @@ import type {
   TranslationStatusResponse
 } from '../types/video.js'
 
-export async function listSupportedLanguages(
-  apiKey: string
-): Promise<ListSupportedLanguagesResponse> {
-  return httpClient(`${BASE_URL}/v2/video_translate/target_languages`, 'GET', {
-    apiKey
-  })
-}
+export class VideoTranslationService extends BaseService {
+  constructor(apiKey: string) {
+    super(apiKey, 'v2')
+  }
 
-export async function translateVideo(
-  apiKey: string,
-  data: TranslateVideoRequest
-): Promise<TranslateVideoResponse> {
-  return httpClient(`${BASE_URL}/v2/video_translate`, 'POST', {
-    apiKey,
-    ...data
-  })
-}
+  async listLanguages(): Promise<ListSupportedLanguagesResponse> {
+    return this.request<ListSupportedLanguagesResponse>(
+      `${BASE_URL}/v2/video_translation.supported_languages`,
+      'GET'
+    )
+  }
 
-export async function getTranslationStatus(
-  apiKey: string,
-  videoTranslateId: string
-): Promise<TranslationStatusResponse> {
-  return httpClient(
-    `${BASE_URL}/v2/video_translate/${videoTranslateId}`,
-    'GET',
-    { apiKey }
-  )
+  async translate(
+    data: TranslateVideoRequest
+  ): Promise<TranslateVideoResponse> {
+    return this.request<TranslateVideoResponse, TranslateVideoRequest>(
+      `${BASE_URL}/v2/video_translation.translate`,
+      'POST',
+      data
+    )
+  }
+
+  async getStatus(
+    videoTranslateId: string
+  ): Promise<TranslationStatusResponse> {
+    return this.request<
+      TranslationStatusResponse,
+      { video_translate_id: string }
+    >(`${BASE_URL}/v2/video_translation.get_status`, 'GET', {
+      video_translate_id: videoTranslateId
+    })
+  }
 }

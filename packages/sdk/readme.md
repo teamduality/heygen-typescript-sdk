@@ -1,57 +1,96 @@
-# Heygen TypeScript SDK
+# Heygen SDK
 
-> Unofficial TypeScript SDK for the Heygen API, providing a simple interface for video generation and management.
+A TypeScript SDK for the Heygen API that provides a clean, typed interface for all Heygen services.
 
-[![NPM Version](https://img.shields.io/npm/v/heygen-typescript-sdk.svg)](https://www.npmjs.com/package/heygen-typescript-sdk)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+## Key Features
 
-## Features
-
-- ✅ Simple, intuitive API for video generation
-- ✅ Full TypeScript support with complete type definitions
-- ✅ Promise-based async/await interface
-- ✅ Comprehensive error handling
-- ✅ Built-in authentication management
-- ✅ Node.js support (v18+)
+- Full TypeScript support with comprehensive types
+- Consistent error handling across all services
+- Automatic handling of API versions (v1/v2)
+- Clean, promise-based API
 
 ## Installation
 
 ```bash
-npm install heygen-typescript-sdk
-# or
-yarn add heygen-typescript-sdk
-# or
-pnpm add heygen-typescript-sdk
+npm install @heygen/sdk
 ```
 
-## Quick Start
+## Usage
 
 ```typescript
-import { HeygenSDK } from 'heygen-typescript-sdk'
+import { HeygenSDK } from '@heygen/sdk'
 
 const sdk = new HeygenSDK('your-api-key')
 
-// Authenticate with Heygen
-await sdk.authenticate()
+// Services handle API versions internally
+await sdk.avatars.list()                    // Uses v2
+await sdk.streaming.create({ ... })         // Uses v1
+await sdk.videos.generation.create({ ... }) // Uses v2
 
-// Make API requests
-const result = await sdk.makeRequest('/endpoint', {
-  // your request data
-})
+// Error handling is consistent across all versions
+try {
+  const result = await sdk.avatars.list()
+  console.log(result.avatars)
+} catch (error) {
+  if (error instanceof APIError) {
+    console.error('API Error:', error.message)
+    console.error('Status:', error.statusCode)
+  }
+}
 ```
 
-## Documentation
+## Architecture
 
-For detailed documentation, visit [our documentation site](https://docs.heygen.com).
+The SDK is organized into service classes that each handle a specific part of the Heygen API:
 
-## Examples
+- `AvatarsService` - Avatar management
+- `StreamingService` - Real-time streaming
+- `VideoAPI`
+  - `generation` - Video generation
+  - `management` - Video management
+  - `translation` - Video translation
+- `VoicesService` - Voice management
+- `TemplatesService` - Template management
 
-[Coming soon]
+Each service internally handles:
 
-## Contributing
+- API version differences (v1/v2)
+- Response formatting
+- Error handling
+- Type safety
 
-We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.md) for details.
+This means you can focus on using the API without worrying about:
 
-## License
+- Which API version to use
+- How to structure requests
+- How to handle errors
+- Response formats
 
-MIT © [Team Duality](https://github.com/teamduality)
+## Error Handling
+
+The SDK throws typed errors for all API issues:
+
+```typescript
+try {
+  await sdk.videos.generation.create({ ... })
+} catch (error) {
+  if (error instanceof APIError) {
+    // Handle API-specific errors
+    console.error(error.statusCode, error.message)
+  } else {
+    // Handle network or other errors
+    console.error(error)
+  }
+}
+```
+
+## Advanced Usage
+
+You can also use individual services directly if needed:
+
+```typescript
+import { VideoGenerationService } from '@heygen/sdk'
+
+const videoService = new VideoGenerationService('your-api-key')
+await videoService.create({ ... })
+```
