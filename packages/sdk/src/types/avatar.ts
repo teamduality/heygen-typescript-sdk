@@ -1,21 +1,11 @@
+import type { TalkingPhoto } from './talking-photo.js'
+
 export interface Avatar {
   avatar_id: string
   avatar_name: string
   gender: string
   preview_image_url: string
   preview_video_url: string
-}
-
-export interface TalkingPhoto {
-  talking_photo_id: string
-  talking_photo_name: string
-  preview_image_url: string
-}
-
-// Internal type used by httpClient
-interface ApiResponse<T> {
-  error: string | null
-  data: T
 }
 
 export interface AvatarListData {

@@ -4,7 +4,7 @@ import type {
   GetTemplateResponse,
   GenerateFromTemplateRequest,
   GenerateFromTemplateResponse
-} from '../types/template.js'
+} from '../types/index.js'
 
 export class TemplatesService extends BaseService {
   constructor(apiKey: string) {
@@ -12,14 +12,15 @@ export class TemplatesService extends BaseService {
   }
 
   async list(): Promise<ListTemplatesResponse> {
-    return this.requestV2<ListTemplatesResponse>('/templates', 'GET')
+    return this.requestV2<ListTemplatesResponse>('/templates', {
+      method: 'GET'
+    })
   }
 
   async get(templateId: string): Promise<GetTemplateResponse> {
-    return this.requestV2<GetTemplateResponse>(
-      `/templates/${templateId}`,
-      'GET'
-    )
+    return this.requestV2<GetTemplateResponse>(`/templates/${templateId}`, {
+      method: 'GET'
+    })
   }
 
   async generate(
@@ -29,6 +30,9 @@ export class TemplatesService extends BaseService {
     return this.requestV2<
       GenerateFromTemplateResponse,
       GenerateFromTemplateRequest
-    >(`/templates/${templateId}/generate`, 'POST', data)
+    >(`/templates/${templateId}/generate`, {
+      method: 'POST',
+      params: data
+    })
   }
 }

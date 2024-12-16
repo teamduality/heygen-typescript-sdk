@@ -4,7 +4,7 @@ import type {
   TranslateVideoRequest,
   TranslateVideoResponse,
   TranslationStatusResponse
-} from '../types/video.js'
+} from '../types/index.js'
 
 export class VideoTranslationService extends BaseService {
   constructor(apiKey: string) {
@@ -14,7 +14,9 @@ export class VideoTranslationService extends BaseService {
   async listLanguages(): Promise<ListSupportedLanguagesResponse> {
     return this.requestV2<ListSupportedLanguagesResponse>(
       '/video_translation.supported_languages',
-      'GET'
+      {
+        method: 'GET'
+      }
     )
   }
 
@@ -23,8 +25,10 @@ export class VideoTranslationService extends BaseService {
   ): Promise<TranslateVideoResponse> {
     return this.requestV2<TranslateVideoResponse, TranslateVideoRequest>(
       '/video_translation.translate',
-      'POST',
-      data
+      {
+        method: 'POST',
+        params: data
+      }
     )
   }
 
@@ -34,8 +38,9 @@ export class VideoTranslationService extends BaseService {
     return this.requestV2<
       TranslationStatusResponse,
       { video_translate_id: string }
-    >('/video_translation.get_status', 'GET', {
-      video_translate_id: videoTranslateId
+    >('/video_translation.get_status', {
+      method: 'GET',
+      params: { video_translate_id: videoTranslateId }
     })
   }
 }

@@ -1,7 +1,5 @@
 import { BaseService } from './base.js'
-import type { AssetContentType, AssetResponse } from '../types/asset.js'
-
-const UPLOAD_URL = 'https://upload.heygen.com/v1'
+import type { AssetContentType, AssetResponse } from '../types/index.js'
 
 export class AssetService extends BaseService {
   constructor(apiKey: string) {
@@ -12,8 +10,10 @@ export class AssetService extends BaseService {
     file: Buffer | Blob,
     contentType: AssetContentType
   ): Promise<AssetResponse> {
-    return this.requestV1<AssetResponse>(`${UPLOAD_URL}/asset`, 'POST', file, {
-      'Content-Type': contentType
+    return this.requestV1<AssetResponse>('/asset', {
+      method: 'POST',
+      file,
+      contentType
     })
   }
 }

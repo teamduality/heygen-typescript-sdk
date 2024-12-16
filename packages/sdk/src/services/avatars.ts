@@ -2,9 +2,8 @@ import { BaseService } from './base.js'
 import type {
   AvatarListData,
   AvatarGroupListData,
-  AvatarGroupData,
   ListAvatarGroupsRequest
-} from '../types/avatar.js'
+} from '../types/index.js'
 
 export class AvatarsService extends BaseService {
   constructor(apiKey: string) {
@@ -12,7 +11,9 @@ export class AvatarsService extends BaseService {
   }
 
   async list(): Promise<AvatarListData> {
-    return this.requestV2<AvatarListData>('/avatars', 'GET')
+    return this.requestV2<AvatarListData>('/avatars', {
+      method: 'GET'
+    })
   }
 
   async listGroups(
@@ -20,8 +21,10 @@ export class AvatarsService extends BaseService {
   ): Promise<AvatarGroupListData> {
     return this.requestV2<AvatarGroupListData, ListAvatarGroupsRequest>(
       '/avatar_group.list',
-      'GET',
-      params
+      {
+        method: 'GET',
+        params
+      }
     )
   }
 }

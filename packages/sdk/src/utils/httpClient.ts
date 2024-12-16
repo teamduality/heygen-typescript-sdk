@@ -23,18 +23,24 @@ export class APIError extends Error {
   }
 }
 
-export async function httpClientV1<T>(
+export async function httpClient<T, P = Record<string, unknown>>(
   url: string,
   method: 'GET' | 'POST' | 'DELETE',
-  { apiKey, ...params }: Record<string, unknown>
+  data?: P | Buffer | Blob,
+  headers?: Record<string, string>
 ): Promise<T> {
   const options: RequestInit = {
     method,
     headers: {
       'Content-Type': 'application/json',
-      'X-Api-Key': apiKey as string
+      ...headers
     },
-    body: Object.keys(params).length ? JSON.stringify(params) : undefined
+    body:
+      data instanceof Buffer || data instanceof Blob
+        ? data
+        : data
+        ? JSON.stringify(data)
+        : undefined
   }
 
   const response = await fetch(url, options)
@@ -55,34 +61,6 @@ export async function httpClientV1<T>(
   return json.data
 }
 
-export async function httpClientV2<T>(
-  url: string,
-  method: 'GET' | 'POST' | 'DELETE',
-  { apiKey, ...params }: Record<string, unknown>
-): Promise<T> {
-  const options: RequestInit = {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Api-Key': apiKey as string
-    },
-    body: Object.keys(params).length ? JSON.stringify(params) : undefined
-  }
-
-  const response = await fetch(url, options)
-  const json = (await response.json()) as V2Response<T>
-
-  if (!response.ok) {
-    throw new APIError(
-      `HTTP error! status: ${response.status}`,
-      response.status,
-      json
-    )
-  }
-
-  if (json.error) {
-    throw new APIError(json.error)
-  }
-
-  return json.data
-}
+// Export aliases for versioned clients
+export const httpClientV1 = httpClient
+export const httpClientV2 = httpClient
