@@ -1,6 +1,7 @@
 import '../../test/mockSetup.js'
 import { describe, expect, it } from 'vitest'
-import { BaseService } from '../base.js'
+import { BaseService, isFileRequest } from '../base.js'
+import type { RequestOptions } from '../base.js'
 import { mockApiResponse, mockApiError, mockFetch } from '../../test/setup.js'
 import { V1_BASE_URL, V2_BASE_URL } from '../../config/endpoints.js'
 
@@ -213,6 +214,34 @@ describe('BaseService', () => {
           method: 'GET'
         })
       ).rejects.toThrow('Internal Server Error')
+    })
+  })
+
+  describe('isFileRequest', () => {
+    it('should identify file requests correctly', () => {
+      const fileRequest: RequestOptions<unknown> = {
+        method: 'POST',
+        file: Buffer.from('test'),
+        contentType: 'image/jpeg'
+      }
+      expect(isFileRequest(fileRequest)).toBe(true)
+    })
+
+    it('should identify non-file requests correctly', () => {
+      const jsonRequest: RequestOptions<unknown> = {
+        method: 'POST',
+        body: { test: 'data' }
+      }
+      expect(isFileRequest(jsonRequest)).toBe(false)
+    })
+
+    it('should handle partial file requests correctly', () => {
+      const partialRequest: RequestOptions<unknown> = {
+        method: 'POST',
+        file: Buffer.from('test')
+        // missing contentType
+      }
+      expect(isFileRequest(partialRequest)).toBe(false)
     })
   })
 })

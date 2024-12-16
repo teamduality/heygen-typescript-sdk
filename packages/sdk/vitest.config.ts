@@ -14,7 +14,9 @@ export default defineConfig({
         'dist/**',
         '**/*.d.ts',
         '**/*.test.ts',
-        'vitest.config.ts'
+        'vitest.config.ts',
+        'tsup.config.ts',
+        'src/test/**'
       ]
     }
   }

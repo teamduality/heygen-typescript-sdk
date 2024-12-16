@@ -240,4 +240,171 @@ describe('httpClient', () => {
       ).rejects.toThrow()
     })
   })
+
+  describe('error handling edge cases', () => {
+    it('should handle V1 error with missing message', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 400,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: 400,
+              data: null
+              // missing message field
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      await expect(
+        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      ).rejects.toThrow('Unknown error')
+    })
+
+    it('should handle V2 error with null error field', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 400,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              error: null,
+              data: null
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      await expect(
+        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      ).rejects.toThrow('Unknown error')
+    })
+
+    it('should handle V1 error with undefined message', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 400,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: 400,
+              message: undefined,
+              data: null
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      await expect(
+        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      ).rejects.toThrow('Unknown error')
+    })
+
+    it('should handle V2 error with undefined error', async () => {
+      const mockResponse = {
+        ok: false,
+        status: 400,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              error: undefined,
+              data: null
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      await expect(
+        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      ).rejects.toThrow('Unknown error')
+    })
+
+    it('should handle V1 success response with non-100 code', async () => {
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: 200,
+              message: 'Some message',
+              data: null
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      await expect(
+        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      ).rejects.toThrow('Some message')
+    })
+  })
+
+  describe('response format handling', () => {
+    it('should handle V2 success response', async () => {
+      const mockData = { foo: 'bar' }
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              error: null,
+              data: mockData
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      const result = await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      expect(result).toEqual(mockData)
+    })
+
+    it('should handle V1 success response', async () => {
+      const mockData = { foo: 'bar' }
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              code: 100,
+              message: 'success',
+              data: mockData
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      const result = await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      expect(result).toEqual(mockData)
+    })
+
+    it('should handle response without error or code fields', async () => {
+      const mockResponse = {
+        ok: true,
+        status: 200,
+        headers: { get: () => 'application/json' },
+        text: () =>
+          Promise.resolve(
+            JSON.stringify({
+              someOtherField: 'value'
+            })
+          )
+      }
+      mockFetch.mockResolvedValueOnce(mockResponse)
+
+      await expect(
+        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      ).rejects.toThrow('Unknown error')
+    })
+  })
 })

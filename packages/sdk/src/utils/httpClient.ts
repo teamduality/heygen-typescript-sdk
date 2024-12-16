@@ -59,11 +59,7 @@ export async function httpClient<T, P = Record<string, unknown>>(
         throw new APIError(json.message || 'Unknown error', json.code, json)
       }
       // Fallback error
-      throw new APIError(
-        `HTTP error! status: ${response.status}`,
-        response.status,
-        json
-      )
+      throw new APIError('Unknown error', response.status, json)
     }
 
     // Handle V2 success format

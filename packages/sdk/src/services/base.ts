@@ -19,9 +19,9 @@ interface FileRequestOptions extends BaseRequestOptions {
   contentType: string
 }
 
-type RequestOptions<T> = JsonRequestOptions<T> | FileRequestOptions
+export type RequestOptions<T> = JsonRequestOptions<T> | FileRequestOptions
 
-function isFileRequest(
+export function isFileRequest(
   options: RequestOptions<unknown>
 ): options is FileRequestOptions {
   return 'file' in options && 'contentType' in options
