@@ -35,47 +35,37 @@ import type {
 } from './types/index.js'
 
 export class HeygenSDK {
-  private apiKey: string
+  protected readonly apiKey: string
+  public streaming: StreamingAPI
+  public videos: VideoAPI
+  public avatars: AvatarAPI
+  public voices: VoiceAPI
 
   constructor(apiKey: string) {
     this.apiKey = apiKey
+    this.streaming = new StreamingAPI(apiKey)
+    this.videos = new VideoAPI(apiKey)
+    this.avatars = new AvatarAPI(apiKey)
+    this.voices = new VoiceAPI(apiKey)
   }
+}
 
-  async listAvatars(): Promise<ListAvatarsResponse> {
-    return listAvatars(this.apiKey)
-  }
+export class StreamingAPI {
+  constructor(protected readonly apiKey: string) {}
 
-  async listVoices(): Promise<ListVoicesResponse> {
-    return listVoices(this.apiKey)
-  }
-
-  async createVideo(
-    videoData: CreateVideoRequest
-  ): Promise<CreateVideoResponse> {
-    return createVideo(this.apiKey, videoData)
-  }
-
-  async getVideo(videoId: string) {
-    return getVideoDetails(this.apiKey, videoId)
-  }
-
-  async deleteVideo(videoId: string) {
-    return deleteVideo(this.apiKey, videoId)
-  }
-
-  async createStreamingSession(
+  async create(
     data: CreateStreamingSessionRequest
   ): Promise<CreateStreamingSessionResponse> {
     return createStreamingSession(this.apiKey, data)
   }
 
-  async startStreamingSession(
+  async start(
     data: StartStreamingSessionRequest
   ): Promise<StartStreamingSessionResponse> {
     return startStreamingSession(this.apiKey, data)
   }
 
-  async listStreamingSessions(): Promise<ListStreamingSessionsResponse> {
+  async list(): Promise<ListStreamingSessionsResponse> {
     return listStreamingSessions(this.apiKey)
   }
 
@@ -87,20 +77,52 @@ export class HeygenSDK {
     return sendTask(this.apiKey, data)
   }
 
-  async closeSession(data: CloseSessionRequest): Promise<CloseSessionResponse> {
+  async close(data: CloseSessionRequest): Promise<CloseSessionResponse> {
     return closeSession(this.apiKey, data)
   }
 
-  async interruptTask(data: InterruptTaskRequest): Promise<void> {
+  async interrupt(data: InterruptTaskRequest): Promise<void> {
     return interruptTask(this.apiKey, data)
   }
 
-  async createSessionToken(): Promise<CreateSessionTokenResponse> {
+  async createToken(): Promise<CreateSessionTokenResponse> {
     return createSessionToken(this.apiKey)
   }
 
-  async listStreamingAvatars(): Promise<ListStreamingAvatarsResponse> {
+  async listAvatars(): Promise<ListStreamingAvatarsResponse> {
     return listStreamingAvatars(this.apiKey)
+  }
+}
+
+export class VideoAPI {
+  constructor(protected readonly apiKey: string) {}
+
+  async create(data: CreateVideoRequest): Promise<CreateVideoResponse> {
+    return createVideo(this.apiKey, data)
+  }
+
+  async get(videoId: string) {
+    return getVideoDetails(this.apiKey, videoId)
+  }
+
+  async delete(videoId: string) {
+    return deleteVideo(this.apiKey, videoId)
+  }
+}
+
+export class AvatarAPI {
+  constructor(protected readonly apiKey: string) {}
+
+  async list(): Promise<ListAvatarsResponse> {
+    return listAvatars(this.apiKey)
+  }
+}
+
+export class VoiceAPI {
+  constructor(protected readonly apiKey: string) {}
+
+  async list(): Promise<ListVoicesResponse> {
+    return listVoices(this.apiKey)
   }
 }
 
