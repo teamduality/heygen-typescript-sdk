@@ -1,4 +1,4 @@
-import { httpClient } from '../utils/httpClient.js'
+import { httpClient, type HttpClientOptions } from '../utils/httpClient.js'
 import { V1_BASE_URL, V2_BASE_URL } from '../config/endpoints.js'
 
 type QueryParamValue = string | number | boolean | undefined
@@ -28,7 +28,16 @@ export function isFileRequest(
 }
 
 export abstract class BaseService {
-  constructor(protected readonly apiKey: string) {}
+  constructor(
+    protected readonly apiKey: string,
+    protected readonly useAuthHeader = false
+  ) {}
+
+  protected getAuthHeaders(): Record<string, string> {
+    return this.useAuthHeader
+      ? { Authorization: `Bearer ${this.apiKey}` }
+      : { 'X-Api-Key': this.apiKey }
+  }
 
   protected async requestV1<T, B = Record<string, never>>(
     path: string,
@@ -53,7 +62,6 @@ export abstract class BaseService {
   ): Promise<T> {
     const url = new URL(`${baseUrl}${path}`)
 
-    // Add query parameters if they exist
     if ('queryParams' in options && options.queryParams) {
       Object.entries(options.queryParams).forEach(([key, value]) => {
         if (value !== undefined) {
@@ -63,22 +71,30 @@ export abstract class BaseService {
     }
 
     const headers = {
-      'X-Api-Key': this.apiKey,
+      ...this.getAuthHeaders(),
       ...options.headers
     }
 
-    if ('file' in options) {
-      return httpClient<T>(url.toString(), options.method, options.file, {
-        'Content-Type': options.contentType,
-        ...headers
+    const requestOptions: HttpClientOptions = {
+      url: url.toString(),
+      method: options.method,
+      headers
+    }
+
+    if (isFileRequest(options)) {
+      return httpClient<T>({
+        ...requestOptions,
+        data: options.file,
+        headers: {
+          ...headers,
+          'Content-Type': options.contentType
+        }
       })
     }
 
-    return httpClient<T, B>(
-      url.toString(),
-      options.method,
-      options.body as B,
-      headers
-    )
+    return httpClient<T, B>({
+      ...requestOptions,
+      data: options.body
+    })
   }
 }

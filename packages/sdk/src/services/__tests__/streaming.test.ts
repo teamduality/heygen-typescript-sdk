@@ -1,7 +1,7 @@
 import '../../test/mockSetup.js'
 import { describe, expect, it } from 'vitest'
 import { StreamingService } from '../streaming.js'
-import { mockApiResponse, mockApiError } from '../../test/setup.js'
+import { mockApiResponse, mockApiError, mockFetch } from '../../test/setup.js'
 import type {
   CreateStreamingSessionRequest,
   CreateStreamingSessionResponse,
@@ -257,5 +257,46 @@ describe('StreamingService', () => {
         'Internal server error'
       )
     })
+  })
+
+  it('should use Bearer token auth', async () => {
+    const request: CreateStreamingSessionRequest = {
+      quality: 'medium'
+    }
+
+    mockApiResponse(
+      {
+        ice_servers2: [],
+        sdp: { sdp: 'v=0\r\n...', type: 'offer' },
+        session_id: mockSessionId
+      },
+      { version: 'v1' }
+    )
+
+    await service.create(request)
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          Authorization: 'Bearer test-api-key'
+        })
+      })
+    )
+  })
+
+  it('should use X-Api-Key for createSessionToken', async () => {
+    mockApiResponse({ token: 'test-token' }, { version: 'v1' })
+
+    await service.createSessionToken()
+
+    expect(mockFetch).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          'X-Api-Key': 'test-api-key'
+        })
+      })
+    )
   })
 })

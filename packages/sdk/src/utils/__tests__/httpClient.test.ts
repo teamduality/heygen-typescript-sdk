@@ -27,7 +27,11 @@ describe('httpClient', () => {
       }
       mockFetch.mockResolvedValueOnce(mockResponse)
 
-      const result = await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      const result = await httpClient<typeof mockData>({
+        url: testUrl,
+        method: 'GET',
+        data: { apiKey: testApiKey }
+      })
       expect(result).toEqual(mockData)
     })
 
@@ -50,7 +54,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow(APIError)
     })
   })
@@ -74,7 +82,11 @@ describe('httpClient', () => {
       }
       mockFetch.mockResolvedValueOnce(mockResponse)
 
-      const result = await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      const result = await httpClient<typeof mockData>({
+        url: testUrl,
+        method: 'GET',
+        data: { apiKey: testApiKey }
+      })
       expect(result).toEqual(mockData)
     })
 
@@ -96,7 +108,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow(APIError)
     })
   })
@@ -120,7 +136,11 @@ describe('httpClient', () => {
       }
       mockFetch.mockResolvedValueOnce(mockResponse)
 
-      await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      await httpClient({
+        url: testUrl,
+        method: 'GET',
+        data: { apiKey: testApiKey }
+      })
       expect(mockFetch).toHaveBeenCalledWith(
         testUrl,
         expect.objectContaining({
@@ -151,7 +171,11 @@ describe('httpClient', () => {
       }
       mockFetch.mockResolvedValueOnce(mockResponse)
 
-      await httpClient(testUrl, 'POST', requestBody)
+      await httpClient({
+        url: testUrl,
+        method: 'POST',
+        data: requestBody
+      })
       expect(mockFetch).toHaveBeenCalledWith(
         testUrl,
         expect.objectContaining({
@@ -165,35 +189,40 @@ describe('httpClient', () => {
     })
 
     it('should handle file uploads', async () => {
-      const fileData = Buffer.from('test file content')
-      const mockResponse = {
-        ok: true,
-        status: 200,
-        headers: {
-          get: () => 'application/json'
-        },
-        text: () =>
-          Promise.resolve(
-            JSON.stringify({
-              code: 100,
-              message: 'success',
-              data: null
-            })
-          )
-      }
-      mockFetch.mockResolvedValueOnce(mockResponse)
+      const fileContent = Buffer.from('test file content')
+      const mockResponse = { url: 'https://example.com/file.jpg' }
 
-      await httpClient(testUrl, 'POST', fileData, {
-        'Content-Type': 'image/jpeg'
+      const mockFetchResponse = new Response(
+        JSON.stringify({
+          code: 100,
+          message: 'success',
+          data: mockResponse
+        }),
+        {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+      mockFetch.mockResolvedValueOnce(mockFetchResponse)
+
+      const result = await httpClient<typeof mockResponse>({
+        url: 'https://api.test.com/endpoint',
+        method: 'POST',
+        data: fileContent,
+        headers: {
+          'Content-Type': 'image/jpeg'
+        }
       })
+
+      expect(result).toEqual(mockResponse)
       expect(mockFetch).toHaveBeenCalledWith(
-        testUrl,
+        'https://api.test.com/endpoint',
         expect.objectContaining({
           method: 'POST',
+          body: fileContent,
           headers: expect.objectContaining({
             'Content-Type': 'image/jpeg'
-          }),
-          body: fileData
+          })
         })
       )
     })
@@ -212,7 +241,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Request failed with status 500')
     })
 
@@ -220,7 +253,11 @@ describe('httpClient', () => {
       mockFetch.mockRejectedValueOnce(new Error('Network error'))
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Network error')
     })
 
@@ -236,7 +273,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow()
     })
   })
@@ -259,7 +300,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Unknown error')
     })
 
@@ -279,7 +324,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Unknown error')
     })
 
@@ -300,7 +349,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Unknown error')
     })
 
@@ -320,7 +373,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Unknown error')
     })
 
@@ -341,7 +398,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Some message')
     })
   })
@@ -363,7 +424,11 @@ describe('httpClient', () => {
       }
       mockFetch.mockResolvedValueOnce(mockResponse)
 
-      const result = await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      const result = await httpClient<typeof mockData>({
+        url: testUrl,
+        method: 'GET',
+        data: { apiKey: testApiKey }
+      })
       expect(result).toEqual(mockData)
     })
 
@@ -384,7 +449,11 @@ describe('httpClient', () => {
       }
       mockFetch.mockResolvedValueOnce(mockResponse)
 
-      const result = await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+      const result = await httpClient<typeof mockData>({
+        url: testUrl,
+        method: 'GET',
+        data: { apiKey: testApiKey }
+      })
       expect(result).toEqual(mockData)
     })
 
@@ -403,7 +472,11 @@ describe('httpClient', () => {
       mockFetch.mockResolvedValueOnce(mockResponse)
 
       await expect(
-        httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
       ).rejects.toThrow('Unknown error')
     })
   })
@@ -426,7 +499,11 @@ describe('httpClient', () => {
 
       let error: unknown
       try {
-        await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        await httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
         expect.fail('Should have thrown an error')
       } catch (e) {
         error = e
@@ -454,7 +531,11 @@ describe('httpClient', () => {
 
       let error: unknown
       try {
-        await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+        await httpClient({
+          url: testUrl,
+          method: 'GET',
+          data: { apiKey: testApiKey }
+        })
         expect.fail('Should have thrown an error')
       } catch (e) {
         error = e
@@ -502,7 +583,11 @@ describe('httpClient', () => {
 
         let error: unknown
         try {
-          await httpClient(testUrl, 'GET', { apiKey: testApiKey })
+          await httpClient({
+            url: testUrl,
+            method: 'GET',
+            data: { apiKey: testApiKey }
+          })
           expect.fail('Should have thrown an error')
         } catch (e) {
           error = e

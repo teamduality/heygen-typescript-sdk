@@ -18,7 +18,7 @@ import type {
 
 export class StreamingService extends BaseService {
   constructor(apiKey: string) {
-    super(apiKey)
+    super(apiKey, true)
   }
 
   async create(
@@ -92,7 +92,10 @@ export class StreamingService extends BaseService {
     return this.requestV1<CreateSessionTokenResponse>(
       '/streaming.create_token',
       {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+          'X-Api-Key': this.apiKey
+        }
       }
     )
   }

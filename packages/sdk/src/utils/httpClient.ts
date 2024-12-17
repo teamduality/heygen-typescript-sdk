@@ -35,12 +35,19 @@ export class APIError extends Error {
   }
 }
 
-export async function httpClient<T, P = Record<string, unknown>>(
-  url: string,
-  method: 'GET' | 'POST' | 'DELETE',
-  data?: P | BufferSource | Blob,
+export interface HttpClientOptions<P = Record<string, unknown>> {
+  url: string
+  method: 'GET' | 'POST' | 'DELETE'
+  data?: P | BufferSource | Blob
   headers?: Record<string, string>
-): Promise<T> {
+}
+
+export async function httpClient<T, P = Record<string, unknown>>({
+  url,
+  method,
+  data,
+  headers
+}: HttpClientOptions<P>): Promise<T> {
   const options: RequestInit = {
     method,
     headers: {
