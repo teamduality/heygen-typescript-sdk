@@ -1,3 +1,5 @@
+import { EmotionType, HeygenSDK } from '@teamduality/heygen-sdk'
+
 import { Room, RoomEvent, VideoPresets } from 'livekit-client'
 import protobuf from 'protobufjs'
 import { convertFloat32ToS16PCM, sleep } from './utils'
@@ -146,10 +148,13 @@ class APIError extends Error {
     this.responseText = responseText
   }
 }
+console.log('YARRRRR MATEY')
 
 export class StreamingAvatar {
   public room: Room | null = null
   public mediaStream: MediaStream | null = null
+
+  private readonly sdk: HeygenSDK
 
   private readonly token: string
   private readonly basePath: string
@@ -167,6 +172,8 @@ export class StreamingAvatar {
     token,
     basePath = 'https://api.heygen.com'
   }: StreamingAvatarApiConfig) {
+    this.sdk = new HeygenSDK(token)
+    console.log('sdk', this.sdk)
     this.token = token
     this.basePath = basePath
   }
@@ -330,31 +337,28 @@ export class StreamingAvatar {
   public async newSession(
     requestData: StartAvatarRequest
   ): Promise<StartAvatarResponse> {
-    return this.request('/v1/streaming.new', {
-      avatar_name: requestData.avatarName,
-      quality: requestData.quality,
-      knowledge_base_id: requestData.knowledgeId,
-      knowledge_base: requestData.knowledgeBase,
+    return this.sdk.streaming.create({
+      avatar_id: requestData.avatarName,
+      quality: requestData.quality ?? 'medium',
       voice: {
         voice_id: requestData.voice?.voiceId,
         rate: requestData.voice?.rate,
-        emotion: requestData.voice?.emotion
+        emotion: requestData.voice?.emotion as unknown as EmotionType
       },
-      language: requestData.language,
-      version: 'v2',
-      video_encoding: 'H264',
-      source: 'sdk',
+      knowledge_base: requestData.knowledgeBase,
+      knowledge_base_id: requestData.knowledgeId,
       disable_idle_timeout: requestData.disableIdleTimeout
     })
   }
 
   public async startSession(): Promise<any> {
-    return this.request('/v1/streaming.start', {
+    return await this.sdk.streaming.start({
       session_id: this.sessionId
     })
   }
 
   public async speak(requestData: SpeakRequest): Promise<any> {
+    console.log('SPEAAAAAAK', requestData)
     requestData.taskType =
       requestData.taskType || requestData.task_type || TaskType.TALK
     requestData.taskMode = requestData.taskMode || TaskMode.ASYNC
@@ -378,28 +382,29 @@ export class StreamingAvatar {
       this.webSocket?.send(encodedFrame)
       return
     }
-    return this.request('/v1/streaming.task', {
+    // Fall back to API
+    return this.sdk.streaming.sendTask({
+      session_id: this.sessionId!,
       text: requestData.text,
-      session_id: this.sessionId,
       task_mode: requestData.taskMode,
-      task_type: requestData.taskType
+      task_type: requestData.taskType === TaskType.TALK ? 'chat' : 'repeat'
     })
   }
 
   public async startListening(): Promise<any> {
-    return this.request('/v1/streaming.start_listening', {
+    return this.sdk.streaming.start({
       session_id: this.sessionId
     })
   }
 
   public async stopListening(): Promise<any> {
-    return this.request('/v1/streaming.stop_listening', {
+    return this.sdk.streaming.closeSession({
       session_id: this.sessionId
     })
   }
 
   public async interrupt(): Promise<any> {
-    return this.request('/v1/streaming.interrupt', {
+    return this.sdk.streaming.interruptTask({
       session_id: this.sessionId
     })
   }
@@ -407,7 +412,7 @@ export class StreamingAvatar {
   public async stopAvatar(): Promise<any> {
     // clear some resources
     this.closeVoiceChat()
-    return this.request('/v1/streaming.stop', {
+    return this.sdk.streaming.closeSession({
       session_id: this.sessionId
     })
   }
@@ -422,44 +427,11 @@ export class StreamingAvatar {
     return this
   }
 
-  private async request(
-    path: string,
-    params: CommonRequest,
-    config?: any
-  ): Promise<any> {
-    try {
-      const response = await fetch(this.getRequestUrl(path), {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(params)
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new APIError(
-          `API request failed with status ${response.status}`,
-          response.status,
-          errorText
-        )
-      }
-
-      const jsonData = await response.json()
-      return jsonData.data
-    } catch (error) {
-      throw error
-    }
-  }
-
   private emit(eventType: string, detail?: any) {
     const event = new CustomEvent(eventType, { detail })
     this.eventTarget.dispatchEvent(event)
   }
-  private getRequestUrl(endpoint: string): string {
-    return `${this.basePath}${endpoint}`
-  }
+
   private async connectWebSocket(requestData: { useSilencePrompt: boolean }) {
     let websocketUrl = `wss://${new URL(this.basePath).hostname}/v1/ws/streaming.chat?session_id=${this.sessionId}&session_token=${this.token}&silence_response=${requestData.useSilencePrompt}`
     if (this.language) {
