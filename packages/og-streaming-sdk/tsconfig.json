@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "target": "es5",
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "lib",
+    "lib": ["es6", "dom", "es2018"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "importHelpers": true
+  },
+  "include": ["src/**/*.ts"]
+}

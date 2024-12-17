@@ -1,0 +1,46 @@
+{
+  "name": "@teamduality/og-streaming-sdk",
+  "version": "2.0.8",
+  "description": "HeyGen SDK for interactive avatar",
+  "author": "HeyGen",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeyGen-Official/StreamingAvatarSDK.git"
+  },
+  "module": "./lib/index.esm.js",
+  "main": "./lib/index.cjs.js",
+  "types": "./lib/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c",
+    "prepublish": "npm run build",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+    "format": "prettier --write 'src/**/*.{js,ts,tsx,css,md}'"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "eslint": "^9.9.1",
+    "prettier": "^3.3.3",
+    "rollup": "^4.20.0",
+    "rollup-plugin-dts": "^6.1.1",
+    "typescript": "^5.5.4"
+  },
+  "bugs": {
+    "url": "https://github.com/HeyGen-Official/StreamingAvatarSDK/issues"
+  },
+  "homepage": "https://github.com/HeyGen-Official/StreamingAvatarSDK",
+  "license": "MIT",
+  "dependencies": {
+    "livekit-client": "^2.4.2",
+    "protobufjs": "^7.4.0",
+    "tslib": "^2.8.1"
+  },
+  "files": [
+    "lib/*"
+  ]
+}
