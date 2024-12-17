@@ -11,10 +11,10 @@ async function main() {
 
   const sdk = new HeygenSDK(apiKey)
 
-  const avatars = await sdk.listAvatars()
+  const avatars = await sdk.streaming.listStreamingAvatars()
   console.log('Avatars:', avatars)
 
-  const voices = await sdk.listVoices()
+  const voices = await sdk.voices.list()
   console.log('Voices:', voices)
 }
 
