@@ -1,5 +1,5 @@
-import {
-  HeygenSDK,
+import { HeygenSDK } from '@teamduality/heygen-sdk'
+import type {
   StreamingQuality,
   EmotionType,
   TaskMode,
@@ -8,8 +8,8 @@ import {
 } from '@teamduality/heygen-sdk'
 import { Room, RoomEvent, VideoPresets } from 'livekit-client'
 import protobuf, { Message } from 'protobufjs'
-import { convertFloat32ToS16PCM, sleep } from './utils'
-import jsonDescriptor from './pipecat.json'
+import { convertFloat32ToS16PCM, sleep } from './utils.js'
+import jsonDescriptor from './pipecat.json' assert { type: 'json' }
 
 export interface StartAvatarRequest {
   quality?: StreamingQuality
@@ -125,7 +125,7 @@ export class HeygenStreamingAvatar {
       let eventMsg = null
       try {
         const messageString = new TextDecoder().decode(
-          roomMessage as ArrayBuffer
+          roomMessage as unknown as ArrayBuffer
         )
         eventMsg = JSON.parse(messageString)
       } catch (e) {
