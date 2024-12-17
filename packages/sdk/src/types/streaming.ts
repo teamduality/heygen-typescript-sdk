@@ -37,7 +37,7 @@ export interface ICEServer {
 
 export interface SDP {
   sdp: string
-  type: 'offer'
+  type: string
 }
 
 export interface CreateStreamingSessionResponse {

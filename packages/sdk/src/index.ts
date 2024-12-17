@@ -1,3 +1,4 @@
+import { HEYGEN_API_BASE_URL } from './config/endpoints.js'
 import { StreamingService } from './services/streaming.js'
 import { AvatarsService } from './services/avatars.js'
 import { VoicesService } from './services/voices.js'
@@ -21,6 +22,7 @@ export type {
 
 export class HeygenSDK {
   protected readonly apiKey: string
+  public readonly basePath: string
   public streaming: StreamingService
   public videos: VideoAPI
   public avatars: AvatarsService
@@ -33,6 +35,7 @@ export class HeygenSDK {
 
   constructor(apiKey: string) {
     this.apiKey = apiKey
+    this.basePath = HEYGEN_API_BASE_URL
     this.streaming = new StreamingService(apiKey)
     this.videos = new VideoAPI(apiKey)
     this.avatars = new AvatarsService(apiKey)

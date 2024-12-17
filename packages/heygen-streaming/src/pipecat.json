@@ -1,0 +1,47 @@
+{
+  "options": {
+    "syntax": "proto3"
+  },
+  "nested": {
+    "pipecat": {
+      "nested": {
+        "Frame": {
+          "fields": {
+            "audio": {
+              "type": "Audio",
+              "id": 1
+            },
+            "text": {
+              "type": "Text",
+              "id": 2
+            }
+          }
+        },
+        "Audio": {
+          "fields": {
+            "audio": {
+              "type": "bytes",
+              "id": 1
+            },
+            "sampleRate": {
+              "type": "int32",
+              "id": 2
+            },
+            "numChannels": {
+              "type": "int32",
+              "id": 3
+            }
+          }
+        },
+        "Text": {
+          "fields": {
+            "text": {
+              "type": "string",
+              "id": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}
