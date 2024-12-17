@@ -30,8 +30,9 @@ export interface CreateStreamingSessionRequest {
 // Response interfaces
 export interface ICEServer {
   urls: string[]
-  username: string
-  credential: string
+  username?: string
+  credential?: string
+  credentialType?: string
 }
 
 export interface SDP {
@@ -40,14 +41,13 @@ export interface SDP {
 }
 
 export interface CreateStreamingSessionResponse {
-  code: number
-  message: string
-  data: {
-    ice_servers?: string[] // deprecated
-    ice_servers2: ICEServer[]
-    sdp: SDP
-    session_id: string
+  ice_servers?: string[] // deprecated
+  ice_servers2: ICEServer[]
+  sdp: {
+    sdp: string
+    type: string // "offer"
   }
+  session_id: string
 }
 
 export interface StartStreamingSessionRequest {
@@ -120,10 +120,7 @@ export interface InterruptTaskRequest {
 // Since there's no specific response structure, we'll use void
 
 export interface CreateSessionTokenResponse {
-  error: number | null
-  data: {
-    token: string
-  }
+  token: string
 }
 
 export interface StreamingAvatarData {
@@ -133,8 +130,4 @@ export interface StreamingAvatarData {
   status: 'ACTIVE' | 'INACTIVE'
 }
 
-export interface ListStreamingAvatarsResponse {
-  code: number
-  data: StreamingAvatarData[]
-  message: string
-}
+export type ListStreamingAvatarsResponse = StreamingAvatarData[]

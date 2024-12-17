@@ -123,12 +123,8 @@ export interface ListVideosRequest {
 }
 
 export interface ListVideosResponse {
-  code: number
-  data: {
-    token: string | null
-    videos: VideoListItem[]
-  }
-  message: string | null
+  token: string | null
+  videos: VideoListItem[]
 }
 
 export interface ListSupportedLanguagesResponse {
@@ -154,14 +150,11 @@ export interface TranslateVideoResponse {
 export type TranslationStatus = 'running' | 'success' | 'failed' | 'pending'
 
 export interface TranslationStatusResponse {
-  error: null
-  data: {
-    video_translate_id: string
-    title: string
-    status: TranslationStatus
-    url: string | null
-    message: string | null
-  }
+  video_translate_id: string
+  title: string
+  status: TranslationStatus
+  url: string | null
+  message: string | null
 }
 
 export interface CreateWebMVideoRequest {

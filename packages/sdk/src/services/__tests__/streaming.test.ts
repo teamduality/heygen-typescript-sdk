@@ -35,16 +35,12 @@ describe('StreamingService', () => {
     ]
 
     const mockResponse: CreateStreamingSessionResponse = {
-      code: 100,
-      message: 'success',
-      data: {
-        ice_servers2: mockIceServers,
-        sdp: {
-          sdp: 'v=0\r\n...',
-          type: 'offer'
-        },
-        session_id: mockSessionId
-      }
+      ice_servers2: mockIceServers,
+      sdp: {
+        sdp: 'v=0\r\n...',
+        type: 'offer'
+      },
+      session_id: mockSessionId
     }
 
     it('should create session with minimal config', async () => {
@@ -203,10 +199,7 @@ describe('StreamingService', () => {
 
   describe('createSessionToken', () => {
     const mockResponse: CreateSessionTokenResponse = {
-      error: null,
-      data: {
-        token: 'test-token'
-      }
+      token: 'test-token'
     }
 
     it('should create session token', async () => {
@@ -217,18 +210,14 @@ describe('StreamingService', () => {
   })
 
   describe('listStreamingAvatars', () => {
-    const mockResponse: ListStreamingAvatarsResponse = {
-      code: 100,
-      message: 'success',
-      data: [
-        {
-          avatar_id: 'test-avatar',
-          created_at: 1234567890,
-          is_public: true,
-          status: 'ACTIVE'
-        }
-      ]
-    }
+    const mockResponse: ListStreamingAvatarsResponse = [
+      {
+        avatar_id: 'test-avatar',
+        created_at: 1234567890,
+        is_public: true,
+        status: 'ACTIVE'
+      }
+    ]
 
     it('should list streaming avatars', async () => {
       mockApiResponse(mockResponse, { version: 'v1' })

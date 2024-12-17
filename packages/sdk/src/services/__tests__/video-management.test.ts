@@ -34,12 +34,8 @@ describe('VideoManagementService', () => {
     ]
 
     const mockResponse: ListVideosResponse = {
-      code: 100,
-      data: {
-        videos: mockVideos,
-        token: null
-      },
-      message: null
+      videos: mockVideos,
+      token: null
     }
 
     it('should list videos without parameters', async () => {
@@ -55,12 +51,8 @@ describe('VideoManagementService', () => {
       }
 
       const paginatedResponse: ListVideosResponse = {
-        code: 100,
-        data: {
-          videos: mockVideos.slice(0, 2),
-          token: 'next-token'
-        },
-        message: null
+        videos: mockVideos.slice(0, 2),
+        token: 'next-token'
       }
 
       mockApiResponse(paginatedResponse, { version: 'v2' })
@@ -70,12 +62,8 @@ describe('VideoManagementService', () => {
 
     it('should handle empty list', async () => {
       const emptyResponse: ListVideosResponse = {
-        code: 100,
-        data: {
-          videos: [],
-          token: null
-        },
-        message: null
+        videos: [],
+        token: null
       }
 
       mockApiResponse(emptyResponse, { version: 'v2' })

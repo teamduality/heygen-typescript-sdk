@@ -127,14 +127,11 @@ describe('VideoTranslationService', () => {
 
   describe('getStatus', () => {
     const mockResponse: TranslationStatusResponse = {
-      error: null,
-      data: {
-        video_translate_id: 'translation-1',
-        title: 'Translated Video',
-        status: 'success',
-        url: 'https://example.com/translated.mp4',
-        message: null
-      }
+      video_translate_id: 'translation-1',
+      title: 'Translated Video',
+      status: 'success',
+      url: 'https://example.com/translated.mp4',
+      message: null
     }
 
     it('should get translation status successfully', async () => {
@@ -145,14 +142,11 @@ describe('VideoTranslationService', () => {
 
     it('should handle processing status', async () => {
       const processingResponse: TranslationStatusResponse = {
-        error: null,
-        data: {
-          video_translate_id: 'translation-1',
-          title: 'Translated Video',
-          status: 'running',
-          url: null,
-          message: 'Translation in progress'
-        }
+        video_translate_id: 'translation-1',
+        title: 'Translated Video',
+        status: 'running',
+        url: null,
+        message: 'Translation in progress'
       }
 
       mockApiResponse(processingResponse, { version: 'v2' })
@@ -162,14 +156,11 @@ describe('VideoTranslationService', () => {
 
     it('should handle failed status', async () => {
       const failedResponse: TranslationStatusResponse = {
-        error: null,
-        data: {
-          video_translate_id: 'translation-1',
-          title: 'Translated Video',
-          status: 'failed',
-          url: null,
-          message: 'Translation failed'
-        }
+        video_translate_id: 'translation-1',
+        title: 'Translated Video',
+        status: 'failed',
+        url: null,
+        message: 'Translation failed'
       }
 
       mockApiResponse(failedResponse, { version: 'v2' })

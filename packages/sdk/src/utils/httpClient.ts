@@ -1,5 +1,4 @@
-import fetch from 'node-fetch'
-import type { RequestInit } from 'node-fetch'
+import type { BufferSource } from 'node:stream/web'
 
 export interface V1Response<T> {
   code: number
@@ -27,7 +26,7 @@ export class APIError extends Error {
 export async function httpClient<T, P = Record<string, unknown>>(
   url: string,
   method: 'GET' | 'POST' | 'DELETE',
-  data?: P | Buffer | Blob,
+  data?: P | BufferSource | Blob,
   headers?: Record<string, string>
 ): Promise<T> {
   const options: RequestInit = {
@@ -37,7 +36,7 @@ export async function httpClient<T, P = Record<string, unknown>>(
       ...headers
     },
     body:
-      data instanceof Buffer || data instanceof Blob
+      data instanceof Blob || data instanceof ArrayBuffer
         ? data
         : data
         ? JSON.stringify(data)
