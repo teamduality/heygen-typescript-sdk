@@ -6,9 +6,21 @@ export interface V1Response<T> {
   data: T
 }
 
+export interface V1ErrorResponse {
+  code: number
+  message: string
+  data: null
+}
+
+export interface V2ErrorResponse {
+  code: string
+  message: string
+}
+
 export interface V2Response<T> {
-  error: string | null
-  data: T
+  error: V2ErrorResponse | null
+  data: T | null
+  status_code?: number
 }
 
 export class APIError extends Error {
@@ -36,11 +48,13 @@ export async function httpClient<T, P = Record<string, unknown>>(
       ...headers
     },
     body:
-      data instanceof Blob || data instanceof ArrayBuffer
+      data instanceof Blob ||
+      data instanceof Buffer ||
+      data instanceof ArrayBuffer
         ? data
         : data
-        ? JSON.stringify(data)
-        : undefined
+          ? JSON.stringify(data)
+          : undefined
   }
 
   const response = await fetch(url, options)
@@ -52,7 +66,17 @@ export async function httpClient<T, P = Record<string, unknown>>(
     if (!response.ok) {
       // Handle V2 error format
       if ('error' in json) {
-        throw new APIError(json.error || 'Unknown error', response.status, json)
+        // Even if error is null, we should still handle it as a V2 error
+        if (json.error) {
+          throw new APIError(
+            json.error.message || 'Unknown error',
+            response.status,
+            json
+          )
+        } else {
+          // Handle case where error is null but response is not ok
+          throw new APIError('Unknown error', response.status, json)
+        }
       }
       // Handle V1 error format
       if ('code' in json) {
@@ -162,7 +186,12 @@ export async function httpClient<T, P = Record<string, unknown>>(
               json.code
             )
           default:
-            throw new APIError(json.message || 'Unknown error', json.code, json)
+            throw new APIError(
+              (json as V1ErrorResponse).message || 'Unknown error',
+              response.status,
+              json,
+              json.code
+            )
         }
       }
       // Fallback error

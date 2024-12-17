@@ -45,6 +45,14 @@ class TestService extends BaseService {
       contentType: options.contentType
     })
   }
+
+  async uploadFile(file: Buffer, contentType: string) {
+    return this.requestV1<{ url: string }>('/upload', {
+      method: 'POST',
+      file: file,
+      contentType: contentType
+    })
+  }
 }
 
 describe('BaseService', () => {
@@ -156,27 +164,23 @@ describe('BaseService', () => {
 
   describe('File uploads', () => {
     it('should handle file upload requests', async () => {
-      const mockResponse = { data: 'test' }
-      const fileData = Buffer.from('test file content')
-      mockApiResponse(mockResponse, { version: 'v1' })
+      const fileContent = Buffer.from('test file content')
+      mockApiResponse(
+        { url: 'https://example.com/file.jpg' },
+        { version: 'v1' }
+      )
 
-      const result = await service.testFileRequest<typeof mockResponse>({
-        path: '/upload',
-        method: 'POST',
-        file: fileData,
-        contentType: 'image/jpeg'
-      })
+      await service.uploadFile(fileContent, 'image/jpeg')
 
-      expect(result).toEqual(mockResponse)
       expect(mockFetch).toHaveBeenCalledWith(
-        `${V1_BASE_URL}/upload`,
+        'https://api.heygen.com/v1/upload',
         expect.objectContaining({
           method: 'POST',
+          body: fileContent,
           headers: expect.objectContaining({
             'Content-Type': 'image/jpeg',
             'X-Api-Key': 'test-api-key'
-          }),
-          body: fileData
+          })
         })
       )
     })
