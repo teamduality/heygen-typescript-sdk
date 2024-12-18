@@ -2,6 +2,8 @@
 
 > A comprehensive suite of TypeScript SDKs for integrating with HeyGen's AI video generation and interactive avatar services.
 
+🚚 **[View Documentation](https://heygen.teamduality.dev)**
+
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](packages/sdk/coverage)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -103,9 +105,14 @@ All services are thoroughly tested with:
 
 ## 📖 Documentation
 
-For detailed API documentation, visit [HeyGen's official docs](https://docs.heygen.com).
+Visit our [documentation site](https://heygen.teamduality.dev) for:
 
-For SDK documentation, see the [SDK README](./packages/sdk/README.md).
+- Detailed API reference
+- Integration guides
+- Code examples
+- TypeScript type definitions
+
+For HeyGen's official API documentation, visit [their docs](https://docs.heygen.com).
 
 ## 🤝 Contributing
 
