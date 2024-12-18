@@ -32,7 +32,15 @@ const config: DocsThemeConfig = {
     link: 'https://github.com/teamduality/heygen-typescript-sdk'
   },
   editLink: {
-    text: 'Edit this page on GitHub →'
+    content: 'Edit this page on GitHub →' as any,
+    component: ({ children, className, filePath }) => (
+      <a
+        className={className}
+        href={`https://github.com/teamduality/heygen-typescript-sdk/edit/main/packages/docs/${filePath}`}
+      >
+        {children}
+      </a>
+    )
   },
   feedback: {
     content: 'Question? Give us feedback →'
@@ -117,11 +125,6 @@ aside ul li button {
   },
   sidebar: {
     toggleButton: true
-  },
-  useNextSeoProps() {
-    return {
-      titleTemplate: '%s – HeyGen TypeScript SDK'
-    }
   }
 }
 
