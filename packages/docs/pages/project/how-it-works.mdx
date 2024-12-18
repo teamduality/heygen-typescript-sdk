@@ -1,3 +1,9 @@
+---
+title: How It Works
+---
+
+import { Callout } from 'nextra/components'
+
 # How It Works
 
 ## Overview
@@ -9,8 +15,6 @@ The HeyGen TypeScript SDK provides a type-safe interface to HeyGen's AI video ge
 3. Demo Application (`@teamduality/og-next-demo`)
 
 ## Architecture
-
-![SDK Architecture](/sdk-architecture.png)
 
 The SDK is built with a modular architecture:
 
@@ -26,6 +30,12 @@ The SDK is built with a modular architecture:
 4. Manage resources and cleanup
 
 ## Code Example
+
+<Callout type="info">
+  Currently we're utilizing the original streaming SDK. Check out our
+  [roadmap](/project/roadmap) for more information on how we're planning to
+  expand on this.
+</Callout>
 
 ```typescript
 import { HeygenSDK } from '@teamduality/heygen-sdk'

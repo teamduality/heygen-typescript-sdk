@@ -41,7 +41,7 @@ const config: DocsThemeConfig = {
     'https://github.com/teamduality/heygen-typescript-sdk/tree/main/packages/docs',
   footer: {
     component: () => (
-      <div className="flex w-full flex-col items-center sm:items-start">
+      <div className="flex w-4/5 mx-auto flex-col items-center py-4">
         <p className="text-xs">
           MIT {new Date().getFullYear()} © Team Duality
         </p>

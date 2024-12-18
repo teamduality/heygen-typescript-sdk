@@ -1,7 +1,15 @@
+---
+title: Quick Start
+---
+
+import { Callout } from 'nextra/components'
+
 # Quick Start
 
 <Callout type="info">
-  This guide covers our TypeScript SDK. For the official HeyGen API documentation, visit their [Quick Start Guide](https://docs.heygen.com/docs/quick-start).
+  This guide covers our TypeScript SDK. For the official HeyGen API
+  documentation, visit their [Quick Start
+  Guide](https://docs.heygen.com/docs/quick-start).
 </Callout>
 
 ## Prerequisites
@@ -10,6 +18,14 @@
 2. Get your API key from the [API settings](https://app.heygen.com/settings) page
 
 > Note: While on the Free Trial, your videos will be watermarked.
+
+<Callout type="warning">
+  Never expose your API key in client-side code or commit it to version control.
+  For browser-based applications, always use a server-side endpoint to proxy
+  your API requests. See our [Streaming SDK
+  documentation](/sdk/streaming#server-side-setup) for an example of secure
+  token handling.
+</Callout>
 
 ## Installation
 

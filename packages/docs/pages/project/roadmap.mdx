@@ -1,0 +1,97 @@
+---
+title: Roadmap
+---
+
+import { Callout } from 'nextra/components'
+
+# Roadmap
+
+This document outlines our development plans for the HeyGen TypeScript SDK ecosystem.
+
+## Core SDK Enhancements
+
+### Additional API Endpoints
+
+- [ ] Photo Avatar Management
+
+  - Generate photo avatar photos
+  - Generate photo avatar looks
+  - Create photo avatar groups
+  - Add looks to photo avatar group
+  - Train photo avatar group
+  - Get training job status
+  - Add motion
+  - Add sound effects
+  - Get photo avatar details
+  - Upscale avatar
+
+- [ ] Webhook Management
+
+  - Register webhooks
+  - List webhooks
+  - Update webhook settings
+  - Delete webhooks
+  - Webhook event handling
+
+### Infrastructure Improvements
+
+- [ ] API Limit handling [API Limits](https://docs.heygen.ai/reference/limits)
+
+## GraphQL Integration
+
+### Apollo Connectors Support
+
+- [ ] Implement Apollo Connectors for HeyGen APIs
+
+### API for APIs
+
+- [ ] Demo application utilizing HeyGen + GraphOS
+
+## Custom Streaming SDK
+
+<Callout type="info">
+  We currently use HeyGen's official streaming SDK. We plan to build our own
+  implementation to provide better TypeScript support and additional features.
+</Callout>
+
+### Phase 1: Core Features
+
+- [ ] Basic WebRTC connection handling
+
+  - Secure connection establishment
+  - Session token management
+  - Basic reconnection logic
+
+- [ ] Stream Management
+
+  - Audio/video track initialization
+  - Basic quality settings (bitrate, framerate)
+  - Simple start/stop controls
+
+- [ ] Avatar Integration
+  - Connect to HeyGen avatar service
+  - Basic voice-to-animation mapping
+
+### Phase 2: Advanced Features
+
+- [ ] Media Controls
+
+  - Device selection (mic/camera)
+  - Mute/unmute controls
+  - Background customization
+
+- [ ] Analytics & Monitoring
+  - Basic usage metrics
+  - Performance monitoring
+  - Debug logging
+
+## Example Applications
+
+We have many, many ieas for sample applications that will demonstrate HeyGen Avatars as the interface for both B2B and B2C AI Applications. More to come!
+
+<Callout>
+  This roadmap is a living document and will be updated based on community
+  feedback and changing requirements. Feel free to [open an
+  issue](https://github.com/teamduality/heygen-typescript-sdk/issues) with
+  suggestions or requests.
+</Callout>
