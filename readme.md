@@ -1,8 +1,20 @@
-# Team Duality Monorepo
+# HeyGen TypeScript SDK (Unofficial)
 
-This monorepo contains packages for integrating with HeyGen's Interactive Avatar services.
+> A comprehensive suite of TypeScript SDKs for integrating with HeyGen's AI video generation and interactive avatar services.
 
-## Packages
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](packages/sdk/coverage)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+## ✨ Features
+
+- 🎯 **Type Safety** - Full TypeScript support with comprehensive types
+- 🔄 **API Versioning** - Automatic handling of API versions (v1/v2)
+- 🧪 **Testing** - 100% test coverage across all packages
+- 📦 **Modular** - Use only what you need
+- 🚀 **Performance** - Optimized for production use
+
+## 📦 Packages
 
 ### @teamduality/heygen-sdk
 
@@ -16,7 +28,7 @@ A TypeScript SDK for HeyGen's Interactive Avatar streaming service, based on [He
 
 A Next.js demo application showcasing the Interactive Avatar integration, based on [HeyGen's InteractiveAvatarNextJSDemo](https://github.com/HeyGen-Official/InteractiveAvatarNextJSDemo). This demo uses our modified streaming SDK and @teamduality/heygen-sdk.
 
-## Getting Started
+## 🚀 Getting Started
 
 1. Install dependencies:
 
@@ -30,7 +42,7 @@ pnpm install
 pnpm build
 ```
 
-## Development
+## 💻 Development
 
 This repository uses pnpm workspaces. To work on a specific package:
 
@@ -52,44 +64,34 @@ pnpm build
 pnpm test
 ```
 
-## 💻 Development
+## ✅ Services Implemented
 
-This project uses:
-
-- pnpm for package management
-- TypeScript for type safety
-- ESM modules
-- Vitest for testing
-- 100% test coverage
-
-### Services Implemented
-
-- ✅ Avatar Management (Digital Avatars)
-- ✅ Video Generation
+- 🎭 Avatar Management (Digital Avatars)
+- 🎬 Video Generation
   - Standard videos
   - WebM videos with transparent background
   - Video status and management
-- ✅ Video Translation
-- ✅ Voice Management
-- ✅ Template Management
-- ✅ User Management
-- ✅ Brand Voice Management
-- ✅ Asset Management
-- ✅ Talking Photo Management
-- ✅ Streaming
+- 🌍 Video Translation
+- 🗣️ Voice Management
+- 📝 Template Management
+- 👤 User Management
+- 🎙️ Brand Voice Management
+- 📁 Asset Management
+- 📸 Talking Photo Management
+- 🔄 Streaming
 
-### Not Yet Implemented
+## 📝 Not Yet Implemented
 
-- 📝 Photo Avatar APIs
+- Photo Avatar APIs
   - Photo avatar generation
   - Photo avatar looks
   - Photo avatar groups
   - Training and effects
-- 📝 Webhook Management
+- Webhook Management
   - Configuration
   - Event handling
 
-### Testing
+## 🧪 Testing
 
 All services are thoroughly tested with:
 
@@ -102,7 +104,7 @@ All services are thoroughly tested with:
 
 For detailed API documentation, visit [HeyGen's official docs](https://docs.heygen.com).
 
-For SDK documentation, see the [SDK README](./packages/sdk/readme.md).
+For SDK documentation, see the [SDK README](./packages/sdk/README.md).
 
 ## 🤝 Contributing
 

@@ -72,11 +72,7 @@
         "Frame": {
           "oneofs": {
             "frame": {
-              "oneof": [
-                "text",
-                "audio",
-                "transcription"
-              ]
+              "oneof": ["text", "audio", "transcription"]
             }
           },
           "fields": {

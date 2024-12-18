@@ -4,24 +4,24 @@ import ReactCodeMirror from '@uiw/react-codemirror'
 
 export default function InteractiveAvatarCode() {
   return (
-    <div className='w-full flex flex-col gap-2'>
+    <div className="w-full flex flex-col gap-2">
       <p>This SDK supports the following behavior:</p>
       <ul>
         <li>
-          <div className='flex flex-row gap-2'>
-            <p className='text-indigo-400 font-semibold'>Start:</p> Start the
+          <div className="flex flex-row gap-2">
+            <p className="text-indigo-400 font-semibold">Start:</p> Start the
             Interactive Avatar session
           </div>
         </li>
         <li>
-          <div className='flex flex-row gap-2'>
-            <p className='text-indigo-400 font-semibold'>Close:</p> Close the
+          <div className="flex flex-row gap-2">
+            <p className="text-indigo-400 font-semibold">Close:</p> Close the
             Interactive Avatar session
           </div>
         </li>
         <li>
-          <div className='flex flex-row gap-2'>
-            <p className='text-indigo-400 font-semibold'>Speak:</p> Repeat the
+          <div className="flex flex-row gap-2">
+            <p className="text-indigo-400 font-semibold">Speak:</p> Repeat the
             input
           </div>
         </li>
@@ -31,8 +31,8 @@ export default function InteractiveAvatarCode() {
           <ReactCodeMirror
             editable={false}
             extensions={[langs.typescript()]}
-            height='700px'
-            theme='dark'
+            height="700px"
+            theme="dark"
             value={TEXT}
           />
         </CardBody>

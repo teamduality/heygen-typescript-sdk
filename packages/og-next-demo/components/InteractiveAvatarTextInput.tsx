@@ -34,19 +34,19 @@ export default function InteractiveAvatarTextInput({
   return (
     <Input
       endContent={
-        <div className='flex flex-row items-center h-full'>
+        <div className="flex flex-row items-center h-full">
           {endContent}
-          <Tooltip content='Send message'>
+          <Tooltip content="Send message">
             {loading ? (
               <Spinner
-                className='text-indigo-300 hover:text-indigo-200'
-                size='sm'
-                color='default'
+                className="text-indigo-300 hover:text-indigo-200"
+                size="sm"
+                color="default"
               />
             ) : (
               <button
-                type='submit'
-                className='focus:outline-none'
+                type="submit"
+                className="focus:outline-none"
                 onClick={handleSubmit}
               >
                 <PaperPlaneRight
@@ -63,7 +63,7 @@ export default function InteractiveAvatarTextInput({
       }
       label={label}
       placeholder={placeholder}
-      size='sm'
+      size="sm"
       value={input}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {

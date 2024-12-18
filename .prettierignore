@@ -1,2 +1,4 @@
-fixtures/
-dist/
+node_modules
+dist
+coverage
+.next

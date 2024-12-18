@@ -188,11 +188,11 @@ export default function InteractiveAvatar() {
   }, [mediaStream, stream])
 
   return (
-    <div className='w-full flex flex-col gap-4'>
+    <div className="w-full flex flex-col gap-4">
       <Card>
-        <CardBody className='h-[500px] flex flex-col justify-center items-center'>
+        <CardBody className="h-[500px] flex flex-col justify-center items-center">
           {stream ? (
-            <div className='h-[500px] w-[900px] justify-center items-center flex rounded-lg overflow-hidden'>
+            <div className="h-[500px] w-[900px] justify-center items-center flex rounded-lg overflow-hidden">
               <video
                 ref={mediaStream}
                 autoPlay
@@ -203,21 +203,21 @@ export default function InteractiveAvatar() {
                   objectFit: 'contain'
                 }}
               >
-                <track kind='captions' />
+                <track kind="captions" />
               </video>
-              <div className='flex flex-col gap-2 absolute bottom-3 right-3'>
+              <div className="flex flex-col gap-2 absolute bottom-3 right-3">
                 <Button
-                  className='bg-gradient-to-tr from-indigo-500 to-indigo-300 text-white rounded-lg'
-                  size='md'
-                  variant='shadow'
+                  className="bg-gradient-to-tr from-indigo-500 to-indigo-300 text-white rounded-lg"
+                  size="md"
+                  variant="shadow"
                   onClick={handleInterrupt}
                 >
                   Interrupt task
                 </Button>
                 <Button
-                  className='bg-gradient-to-tr from-indigo-500 to-indigo-300  text-white rounded-lg'
-                  size='md'
-                  variant='shadow'
+                  className="bg-gradient-to-tr from-indigo-500 to-indigo-300  text-white rounded-lg"
+                  size="md"
+                  variant="shadow"
                   onClick={endSession}
                 >
                   End session
@@ -225,27 +225,27 @@ export default function InteractiveAvatar() {
               </div>
             </div>
           ) : !isLoadingSession ? (
-            <div className='h-full justify-center items-center flex flex-col gap-8 w-[500px] self-center'>
-              <div className='flex flex-col gap-2 w-full'>
-                <p className='text-sm font-medium leading-none'>
+            <div className="h-full justify-center items-center flex flex-col gap-8 w-[500px] self-center">
+              <div className="flex flex-col gap-2 w-full">
+                <p className="text-sm font-medium leading-none">
                   Custom Knowledge ID (optional)
                 </p>
                 <Input
-                  placeholder='Enter a custom knowledge ID'
+                  placeholder="Enter a custom knowledge ID"
                   value={knowledgeId}
                   onChange={(e) => setKnowledgeId(e.target.value)}
                 />
-                <p className='text-sm font-medium leading-none'>
+                <p className="text-sm font-medium leading-none">
                   Custom Avatar ID (optional)
                 </p>
                 <Input
-                  placeholder='Enter a custom avatar ID'
+                  placeholder="Enter a custom avatar ID"
                   value={avatarId}
                   onChange={(e) => setAvatarId(e.target.value)}
                 />
                 <Select
-                  placeholder='Or select one from these example avatars'
-                  size='md'
+                  placeholder="Or select one from these example avatars"
+                  size="md"
                   onChange={(e) => {
                     setAvatarId(e.target.value)
                   }}
@@ -260,9 +260,9 @@ export default function InteractiveAvatar() {
                   ))}
                 </Select>
                 <Select
-                  className='max-w-xs'
-                  label='Select language'
-                  placeholder='Select language'
+                  className="max-w-xs"
+                  label="Select language"
+                  placeholder="Select language"
                   selectedKeys={[language]}
                   onChange={(e) => {
                     setLanguage(e.target.value)
@@ -274,52 +274,52 @@ export default function InteractiveAvatar() {
                 </Select>
               </div>
               <Button
-                className='bg-gradient-to-tr from-indigo-500 to-indigo-300 w-full text-white'
-                size='md'
-                variant='shadow'
+                className="bg-gradient-to-tr from-indigo-500 to-indigo-300 w-full text-white"
+                size="md"
+                variant="shadow"
                 onClick={startSession}
               >
                 Start session
               </Button>
             </div>
           ) : (
-            <Spinner color='default' size='lg' />
+            <Spinner color="default" size="lg" />
           )}
         </CardBody>
         <Divider />
-        <CardFooter className='flex flex-col gap-3 relative'>
+        <CardFooter className="flex flex-col gap-3 relative">
           <Tabs
-            aria-label='Options'
+            aria-label="Options"
             selectedKey={chatMode}
             onSelectionChange={(v) => {
               handleChangeChatMode(v)
             }}
           >
-            <Tab key='text_mode' title='Text mode' />
-            <Tab key='voice_mode' title='Voice mode' />
+            <Tab key="text_mode" title="Text mode" />
+            <Tab key="voice_mode" title="Voice mode" />
           </Tabs>
           {chatMode === 'text_mode' ? (
-            <div className='w-full flex relative'>
+            <div className="w-full flex relative">
               <InteractiveAvatarTextInput
                 disabled={!stream}
                 input={text}
-                label='Chat'
+                label="Chat"
                 loading={isLoadingRepeat}
-                placeholder='Type something for the avatar to respond'
+                placeholder="Type something for the avatar to respond"
                 setInput={setText}
                 onSubmit={handleSpeak}
               />
               {text && (
-                <Chip className='absolute right-16 top-3'>Listening</Chip>
+                <Chip className="absolute right-16 top-3">Listening</Chip>
               )}
             </div>
           ) : (
-            <div className='w-full text-center'>
+            <div className="w-full text-center">
               <Button
-                className='bg-gradient-to-tr from-indigo-500 to-indigo-300 text-white'
+                className="bg-gradient-to-tr from-indigo-500 to-indigo-300 text-white"
                 isDisabled={!isUserTalking}
-                size='md'
-                variant='shadow'
+                size="md"
+                variant="shadow"
               >
                 {isUserTalking ? 'Listening' : 'Voice chat'}
               </Button>
@@ -327,8 +327,8 @@ export default function InteractiveAvatar() {
           )}
         </CardFooter>
       </Card>
-      <p className='font-mono text-right'>
-        <span className='font-bold'>Console:</span>
+      <p className="font-mono text-right">
+        <span className="font-bold">Console:</span>
         <br />
         {debug}
       </p>

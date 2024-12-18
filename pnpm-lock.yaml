@@ -6,6 +6,14 @@ settings:
 
 importers:
 
+  .:
+    devDependencies:
+      prettier:
+        specifier: ^3.3.3
+        version: 3.4.2
+
+  packages/*: {}
+
   packages/example:
     dependencies:
       '@teamduality/heygen-sdk':
