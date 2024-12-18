@@ -5,6 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](packages/sdk/coverage)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Prettier](https://img.shields.io/badge/prettier-enabled-brightgreen.svg)](https://prettier.io/)
 
 ## ✨ Features
 
@@ -113,3 +114,5 @@ We welcome contributions! Please see our [contributing guidelines](CONTRIBUTING.
 ## 📄 License
 
 MIT © [Team Duality](https://github.com/teamduality)
+
+To stay up to date or learn more, follow [@scottsilvi](https://x.com/scottsilvi) on X.

@@ -1,0 +1,189 @@
+---
+title: Core SDK
+---
+
+import { Callout } from 'nextra/components'
+
+# Core SDK
+
+The `@teamduality/heygen-sdk` package provides a simple interface for AI video generation and avatar management.
+
+## Getting Started
+
+For installation and basic usage examples, check out our [Quick Start Guide](/guide/quick-start).
+
+## API Reference
+
+<Callout>
+  While this documentation covers our TypeScript SDK methods, you can find
+  complete API specifications in HeyGen's [official API
+  reference](https://docs.heygen.com/reference). Each SDK method maps directly
+  to an API endpoint.
+</Callout>
+
+### Video Generation
+
+[Official API Reference](https://docs.heygen.com/reference/create-an-avatar-video-v2)
+
+```typescript
+// Create a video
+const video = await sdk.videos.create({
+  background: '#ffffff',
+  clips: [
+    /* ... */
+  ]
+})
+
+// Get video status
+const status = await sdk.videos.get(video.video_id)
+
+// Create WebM video (transparent background)
+const webm = await sdk.videos.createWebM({
+  /* ... */
+})
+
+// Delete a video
+await sdk.videos.delete(videoId)
+```
+
+### Video Translation
+
+[Official API Reference](https://docs.heygen.com/reference/translate-video)
+
+```typescript
+// List supported languages
+const languages = await sdk.videoTranslation.listLanguages()
+
+// Translate a video
+const translation = await sdk.videoTranslation.translate({
+  video_id: 'your_video_id',
+  target_language: 'es'
+})
+
+// Get translation status
+const status = await sdk.videoTranslation.getStatus(
+  translation.video_translate_id
+)
+```
+
+### Avatar Management
+
+[Official API Reference](https://docs.heygen.com/reference/list-avatars-v2)
+
+```typescript
+// List avatars
+const avatars = await sdk.avatars.list()
+
+// Get avatar details
+const avatar = await sdk.avatars.get(avatarId)
+
+// Create custom avatar
+const newAvatar = await sdk.avatars.create({
+  /* ... */
+})
+```
+
+### Voice Management
+
+[Official API Reference](https://docs.heygen.com/reference/list-voices-v2)
+
+```typescript
+// List all available voices
+const voices = await sdk.voices.list()
+```
+
+### Template Management
+
+[Official API Reference](https://docs.heygen.com/reference/list-templates-v2)
+
+```typescript
+// List templates
+const templates = await sdk.templates.list()
+
+// Get template details
+const template = await sdk.templates.get(templateId)
+
+// Generate video from template
+const video = await sdk.templates.generate(templateId, {
+  /* template data */
+})
+```
+
+### User Management
+
+[Official API Reference](https://docs.heygen.com/reference/get-current-user-information)
+
+```typescript
+// Get current user info
+const user = await sdk.user.getCurrentUser()
+
+// Get remaining quota
+const quota = await sdk.user.getRemainingQuota()
+```
+
+### Asset Management
+
+[Official API Reference](https://docs.heygen.com/reference/upload-asset)
+
+```typescript
+// Upload an asset
+const asset = await sdk.asset.upload(fileBuffer, 'image/png')
+```
+
+### Interactive Avatars
+
+For real-time avatar streaming and interactive features, see the [Streaming SDK documentation](/sdk/streaming).
+
+## TypeScript Support
+
+This SDK provides comprehensive TypeScript definitions for all requests, responses, and enums. Here are some examples:
+
+```typescript
+// Quality and encoding options
+type StreamingQuality = 'high' | 'medium' | 'low'
+type VideoEncoding = 'H264' | 'VP8'
+
+// Avatar emotion types
+type EmotionType =
+  | 'Excited'
+  | 'Serious'
+  | 'Friendly'
+  | 'Soothing'
+  | 'Broadcaster'
+
+// Request interfaces
+interface CreateStreamingSessionRequest {
+  quality: StreamingQuality
+  avatar_id?: string
+  voice?: {
+    voice_id?: string
+    rate?: number
+    emotion?: EmotionType
+  }
+  video_encoding?: VideoEncoding
+  knowledge_base_id?: string
+  disable_idle_timeout?: boolean
+}
+
+// Response interfaces
+interface CreateStreamingSessionResponse {
+  ice_servers2: {
+    urls: string[]
+    username?: string
+    credential?: string
+    credentialType?: string
+  }[]
+  sdp: {
+    sdp: string
+    type: string
+  }
+  session_id: string
+}
+```
+
+All SDK methods are fully typed, providing:
+
+- Type-safe request parameters
+- Autocomplete for options and enums
+- Properly typed response objects
+- Type guards and discriminated unions where appropriate

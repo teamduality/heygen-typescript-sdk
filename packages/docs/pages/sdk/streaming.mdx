@@ -1,0 +1,196 @@
+---
+title: Streaming SDK
+---
+
+import { Callout } from 'nextra/components'
+
+# Streaming SDK
+
+The streaming functionality consists of two parts:
+
+1. Core SDK streaming service (`@teamduality/heygen-sdk`)
+2. Interactive Avatar SDK (`@teamduality/og-streaming-sdk`)
+
+## API Reference
+
+<Callout>
+  While this documentation covers our TypeScript SDK methods, you can find
+  complete API specifications in HeyGen's [official API
+  reference](https://docs.heygen.com/reference). Each SDK method maps directly
+  to an API endpoint.
+</Callout>
+
+## Server-Side Setup
+
+First, you'll need to create a session token using your API key:
+
+```typescript
+import { HeygenSDK } from '@teamduality/heygen-sdk'
+
+// This should be done server-side to protect your API key
+async function getAccessToken() {
+  const sdk = new HeygenSDK(process.env.HEYGEN_API_KEY)
+  const { token } = await sdk.streaming.createSessionToken()
+  return token
+}
+```
+
+Example Next.js API route:
+
+```typescript
+// app/api/get-access-token/route.ts
+import { HeygenSDK } from '@teamduality/heygen-sdk'
+
+export async function POST() {
+  try {
+    const sdk = new HeygenSDK(process.env.HEYGEN_API_KEY)
+    const data = await sdk.streaming.createSessionToken()
+    return new Response(data.token)
+  } catch (error) {
+    return new Response('Failed to retrieve access token', { status: 500 })
+  }
+}
+```
+
+## Client-Side Integration
+
+Once you have a token, you can use the streaming SDK:
+
+```typescript
+import {
+  StreamingAvatar,
+  TaskType,
+  TaskMode
+} from '@teamduality/og-streaming-sdk'
+
+// Initialize with token from server
+const avatar = new StreamingAvatar({
+  token: accessToken
+})
+
+// Start an avatar session
+await avatar.createStartAvatar({
+  quality: 'medium',
+  avatarName: 'your_avatar_id',
+  voice: {
+    rate: 1.0,
+    emotion: 'Friendly'
+  }
+})
+
+// Make the avatar speak
+await avatar.speak({
+  text: 'Hello world!',
+  taskType: TaskType.REPEAT,
+  taskMode: TaskMode.SYNC
+})
+
+// Clean up when done
+await avatar.stopAvatar()
+```
+
+## Available Methods
+
+### Session Management
+
+```typescript
+// Create a new streaming session
+const session = await sdk.streaming.create({
+  avatar_id: 'your_avatar_id',
+  quality: 'medium'
+})
+
+// Start the session
+await sdk.streaming.start({
+  session_id: session.session_id
+})
+
+// List active sessions
+const sessions = await sdk.streaming.listSessions()
+
+// Close a session
+await sdk.streaming.closeSession({
+  session_id: 'your_session_id'
+})
+```
+
+### Task Management
+
+```typescript
+// Send a task (like speaking)
+await sdk.streaming.sendTask({
+  session_id: 'your_session_id',
+  task_type: 'talk',
+  text: 'Hello world!'
+})
+
+// Interrupt current task
+await sdk.streaming.interruptTask({
+  session_id: 'your_session_id'
+})
+```
+
+### Voice Chat Integration
+
+```typescript
+// Start voice chat mode
+await avatar.startVoiceChat()
+
+// Start listening for input
+avatar.startListening()
+
+// Stop listening
+avatar.stopListening()
+
+// Close voice chat
+avatar.closeVoiceChat()
+```
+
+## Interactive Example
+
+Here's a complete example using Next.js and the UI components:
+
+```typescript
+export default function InteractiveAvatar() {
+  const [stream, setStream] = useState<MediaStream>()
+  const avatar = useRef<StreamingAvatar | null>(null)
+  const mediaStream = useRef<HTMLVideoElement>(null)
+
+  async function startSession() {
+    // Get token from your API
+    const token = await fetch('/api/get-access-token').then(r => r.text())
+
+    avatar.current = new StreamingAvatar({ token })
+
+    const { stream } = await avatar.current.createStartAvatar({
+      quality: 'medium',
+      avatarName: 'your_avatar_id'
+    })
+
+    setStream(stream)
+  }
+
+  async function handleSpeak() {
+    await avatar.current?.speak({
+      text: 'Hello world!',
+      taskType: TaskType.REPEAT,
+      taskMode: TaskMode.SYNC
+    })
+  }
+
+  // Clean up
+  async function endSession() {
+    await avatar.current?.stopAvatar()
+    setStream(undefined)
+  }
+
+  return (
+    <div>
+      <video ref={mediaStream} autoPlay playsInline>
+        <track kind="captions" />
+      </video>
+      {/* Your UI controls */}
+    </div>
+  )
+}
+```
