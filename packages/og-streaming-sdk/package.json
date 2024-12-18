@@ -11,6 +11,13 @@
   "main": "./lib/index.cjs.js",
   "types": "./lib/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.esm.js",
+      "require": "./lib/index.cjs.js"
+    }
+  },
   "scripts": {
     "build": "rollup -c",
     "prepublish": "npm run build",
@@ -36,7 +43,7 @@
   "homepage": "https://github.com/HeyGen-Official/StreamingAvatarSDK",
   "license": "MIT",
   "dependencies": {
-    "@teamduality/heygen-sdk": "workspace:*",
+    "@teamduality/heygen-typescript-sdk": "workspace:*",
     "livekit-client": "^2.4.2",
     "protobufjs": "^7.4.0",
     "tslib": "^2.8.1"

@@ -8,7 +8,7 @@ import { Callout } from 'nextra/components'
 
 The streaming functionality consists of two parts:
 
-1. Core SDK streaming service (`@teamduality/heygen-sdk`)
+1. Core SDK streaming service (`@teamduality/heygen-typescript-sdk`)
 2. Interactive Avatar SDK (`@teamduality/og-streaming-sdk`)
 
 ## API Reference
@@ -25,7 +25,7 @@ The streaming functionality consists of two parts:
 First, you'll need to create a session token using your API key:
 
 ```typescript
-import { HeygenSDK } from '@teamduality/heygen-sdk'
+import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 // This should be done server-side to protect your API key
 async function getAccessToken() {
@@ -39,7 +39,7 @@ Example Next.js API route:
 
 ```typescript
 // app/api/get-access-token/route.ts
-import { HeygenSDK } from '@teamduality/heygen-sdk'
+import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 export async function POST() {
   try {

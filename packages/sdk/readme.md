@@ -1,17 +1,17 @@
-# @teamduality/heygen-sdk
+# @teamduality/heygen-typescript-sdk
 
 A TypeScript SDK for the HeyGen API, providing a simple interface for AI video generation and avatar management.
 
 ## Installation
 
 ```bash
-pnpm add @teamduality/heygen-sdk
+pnpm add @teamduality/heygen-typescript-sdk
 ```
 
 ## Usage
 
 ```typescript
-import { HeygenSDK } from '@teamduality/heygen-sdk'
+import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 // Initialize the SDK with your API key
 const sdk = new HeygenSDK('your_api_key')

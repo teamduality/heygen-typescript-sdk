@@ -1,6 +1,6 @@
 # HeyGen SDK Example
 
-> Example implementation of the [@teamduality/heygen-sdk](../sdk) package.
+> Example implementation of the [@teamduality/heygen-typescript-sdk](../sdk) package.
 
 ## 🚀 Getting Started
 
@@ -31,7 +31,7 @@ pnpm dev
 ## 📝 Example Code
 
 ```typescript
-import { HeygenSDK } from '@teamduality/heygen-sdk'
+import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 async function main() {
   const sdk = new HeygenSDK(process.env.HEYGEN_API_KEY)

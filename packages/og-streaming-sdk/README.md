@@ -1,6 +1,6 @@
 # @teamduality/og-streaming-sdk
 
-A TypeScript SDK for HeyGen's Interactive Avatar streaming service. Based on [HeyGen's StreamingAvatarSDK](https://github.com/HeyGen-Official/StreamingAvatarSDK), modified to use @teamduality/heygen-sdk.
+A TypeScript SDK for HeyGen's Interactive Avatar streaming service. Based on [HeyGen's StreamingAvatarSDK](https://github.com/HeyGen-Official/StreamingAvatarSDK), modified to use @teamduality/heygen-typescript-sdk.
 
 ## Installation
 

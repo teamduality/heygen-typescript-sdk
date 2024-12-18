@@ -11,6 +11,9 @@ importers:
       prettier:
         specifier: ^3.3.3
         version: 3.4.2
+      typescript:
+        specifier: ^5.0.0
+        version: 5.7.2
 
   packages/docs:
     dependencies:
@@ -60,7 +63,7 @@ importers:
 
   packages/example:
     dependencies:
-      '@teamduality/heygen-sdk':
+      '@teamduality/heygen-typescript-sdk':
         specifier: workspace:*
         version: link:../sdk
       dotenv:
@@ -130,7 +133,7 @@ importers:
       '@react-aria/visually-hidden':
         specifier: 3.8.12
         version: 3.8.12(react@18.3.1)
-      '@teamduality/heygen-sdk':
+      '@teamduality/heygen-typescript-sdk':
         specifier: workspace:*
         version: link:../sdk
       '@teamduality/og-streaming-sdk':
@@ -239,7 +242,7 @@ importers:
 
   packages/og-streaming-sdk:
     dependencies:
-      '@teamduality/heygen-sdk':
+      '@teamduality/heygen-typescript-sdk':
         specifier: workspace:*
         version: link:../sdk
       livekit-client:

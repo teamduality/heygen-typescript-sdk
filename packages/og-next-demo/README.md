@@ -1,6 +1,6 @@
 # @teamduality/og-next-demo
 
-A Next.js demo application showcasing HeyGen's Interactive Avatar integration. Based on [HeyGen's InteractiveAvatarNextJSDemo](https://github.com/HeyGen-Official/InteractiveAvatarNextJSDemo), modified to use @teamduality/og-streaming-sdk and @teamduality/heygen-sdk.
+A Next.js demo application showcasing HeyGen's Interactive Avatar integration. Based on [HeyGen's InteractiveAvatarNextJSDemo](https://github.com/HeyGen-Official/InteractiveAvatarNextJSDemo), modified to use @teamduality/og-streaming-sdk and @teamduality/heygen-typescript-sdk.
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ This demo uses:
 
 - Next.js 13+ with App Router
 - @teamduality/og-streaming-sdk for avatar interactions
-- @teamduality/heygen-sdk for API communication
+- @teamduality/heygen-typescript-sdk for API communication
 - NextUI for the user interface
 
 ## Documentation

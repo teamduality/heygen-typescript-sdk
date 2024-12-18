@@ -1,5 +1,5 @@
 import { config } from 'dotenv'
-import { HeygenSDK } from '@teamduality/heygen-sdk'
+import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 config()
 

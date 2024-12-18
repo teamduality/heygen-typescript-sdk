@@ -17,17 +17,17 @@
 
 ## 📦 Packages
 
-### @teamduality/heygen-sdk
+### @teamduality/heygen-typescript-sdk
 
 The core TypeScript SDK for interacting with HeyGen's API. This package provides a simple interface for AI video generation and serves as the foundation for our streaming avatar integration.
 
 ### @teamduality/og-streaming-sdk
 
-A TypeScript SDK for HeyGen's Interactive Avatar streaming service, based on [HeyGen's StreamingAvatarSDK](https://github.com/HeyGen-Official/StreamingAvatarSDK). This package has been modified to use @teamduality/heygen-sdk for API interactions.
+A TypeScript SDK for HeyGen's Interactive Avatar streaming service, based on [HeyGen's StreamingAvatarSDK](https://github.com/HeyGen-Official/StreamingAvatarSDK). This package has been modified to use @teamduality/heygen-typescript-sdk for API interactions.
 
 ### @teamduality/og-next-demo
 
-A Next.js demo application showcasing the Interactive Avatar integration, based on [HeyGen's InteractiveAvatarNextJSDemo](https://github.com/HeyGen-Official/InteractiveAvatarNextJSDemo). This demo uses our modified streaming SDK and @teamduality/heygen-sdk.
+A Next.js demo application showcasing the Interactive Avatar integration, based on [HeyGen's InteractiveAvatarNextJSDemo](https://github.com/HeyGen-Official/InteractiveAvatarNextJSDemo). This demo uses our modified streaming SDK and @teamduality/heygen-typescript-sdk.
 
 ## 🚀 Getting Started
 

@@ -1,4 +1,4 @@
-import { EmotionType, HeygenSDK } from '@teamduality/heygen-sdk'
+import { EmotionType, HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 import { Room, RoomEvent, VideoPresets } from 'livekit-client'
 import protobuf from 'protobufjs'

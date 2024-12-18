@@ -1,4 +1,4 @@
-import { HeygenSDK } from '@teamduality/heygen-sdk'
+import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
 
 const HEYGEN_API_KEY = process.env.HEYGEN_API_KEY
 
