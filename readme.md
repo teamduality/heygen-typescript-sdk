@@ -1,34 +1,55 @@
-# HeyGen SDK Monorepo
+# Team Duality Monorepo
 
-> Unofficial TypeScript SDK and examples for the HeyGen API, providing a simple interface for AI video generation.
+This monorepo contains packages for integrating with HeyGen's Interactive Avatar services.
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)](packages/sdk/coverage)
+## Packages
 
-## 📦 Packages
+### @teamduality/heygen-sdk
 
-This monorepo contains the following packages:
+The core TypeScript SDK for interacting with HeyGen's API. This package provides a simple interface for AI video generation and serves as the foundation for our streaming avatar integration.
 
-- [@teamduality/heygen-sdk](./packages/sdk/README.md) - Core SDK package for interacting with HeyGen's API
-- [@teamduality/heygen-sdk-example](./packages/example) - Example implementation and usage patterns
+### @teamduality/og-streaming-sdk
 
-## 🚀 Quick Start
+A TypeScript SDK for HeyGen's Interactive Avatar streaming service, based on [HeyGen's StreamingAvatarSDK](https://github.com/HeyGen-Official/StreamingAvatarSDK). This package has been modified to use @teamduality/heygen-sdk for API interactions.
+
+### @teamduality/og-next-demo
+
+A Next.js demo application showcasing the Interactive Avatar integration, based on [HeyGen's InteractiveAvatarNextJSDemo](https://github.com/HeyGen-Official/InteractiveAvatarNextJSDemo). This demo uses our modified streaming SDK and @teamduality/heygen-sdk.
+
+## Getting Started
+
+1. Install dependencies:
 
 ```bash
+pnpm install
+```
+
+2. Build packages:
+
+```bash
+pnpm build
+```
+
+## Development
+
+This repository uses pnpm workspaces. To work on a specific package:
+
+```bash
+# Navigate to package directory
+cd packages/heygen-sdk
+# or
+cd packages/og-streaming-sdk
+# or
+cd packages/og-next-demo
+
 # Install dependencies
 pnpm install
 
-# Build the SDK
-pnpm --filter @teamduality/heygen-sdk build
+# Build
+pnpm build
 
-# Run tests
-pnpm --filter @teamduality/heygen-sdk test
-
-# Run tests with coverage
-pnpm --filter @teamduality/heygen-sdk test:coverage
-
-# Run the example
-pnpm --filter @teamduality/heygen-sdk-example dev
+# Run tests (if available)
+pnpm test
 ```
 
 ## 💻 Development
@@ -81,7 +102,7 @@ All services are thoroughly tested with:
 
 For detailed API documentation, visit [HeyGen's official docs](https://docs.heygen.com).
 
-For SDK documentation, see the [SDK README](./packages/sdk/README.md).
+For SDK documentation, see the [SDK README](./packages/sdk/readme.md).
 
 ## 🤝 Contributing
 
