@@ -215,6 +215,9 @@ importers:
 
   packages/og-streaming-sdk:
     dependencies:
+      '@teamduality/heygen-sdk':
+        specifier: workspace:*
+        version: link:../sdk
       livekit-client:
         specifier: ^2.4.2
         version: 2.7.5

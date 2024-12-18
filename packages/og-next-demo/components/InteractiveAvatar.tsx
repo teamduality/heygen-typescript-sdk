@@ -162,6 +162,7 @@ export default function InteractiveAvatar() {
   })
 
   const previousText = usePrevious(text)
+
   useEffect(() => {
     if (!previousText && text) {
       avatar.current?.startListening()
@@ -259,9 +260,9 @@ export default function InteractiveAvatar() {
                   ))}
                 </Select>
                 <Select
+                  className='max-w-xs'
                   label='Select language'
                   placeholder='Select language'
-                  className='max-w-xs'
                   selectedKeys={[language]}
                   onChange={(e) => {
                     setLanguage(e.target.value)
@@ -315,8 +316,8 @@ export default function InteractiveAvatar() {
           ) : (
             <div className='w-full text-center'>
               <Button
-                isDisabled={!isUserTalking}
                 className='bg-gradient-to-tr from-indigo-500 to-indigo-300 text-white'
+                isDisabled={!isUserTalking}
                 size='md'
                 variant='shadow'
               >
