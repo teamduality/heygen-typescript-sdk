@@ -56,6 +56,8 @@ const session = await sdk.streaming.create({
 - List available avatars
 - Create custom avatars
 - Modify avatar settings
+- Manage avatar groups
+- List avatars in groups
 
 ### Voice Management
 

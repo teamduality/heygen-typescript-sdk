@@ -5,7 +5,8 @@ import { mockApiResponse, mockApiError } from '../../test/setup.js'
 import type {
   AvatarListData,
   AvatarGroupListData,
-  ListAvatarGroupsRequest
+  ListAvatarGroupsRequest,
+  AvatarGroupData
 } from '../../types/index.js'
 
 describe('AvatarsService', () => {
@@ -114,6 +115,56 @@ describe('AvatarsService', () => {
       it('should handle server errors', async () => {
         mockApiError(500, 'Internal server error', { version: 'v2' })
         await expect(service.listGroups()).rejects.toThrow(
+          'Internal server error'
+        )
+      })
+    })
+  })
+
+  describe('listInGroup', () => {
+    const mockResponse: AvatarGroupData = {
+      avatar_list: [
+        {
+          avatar_id: 'test-avatar-1',
+          avatar_name: 'Test Avatar 1',
+          gender: 'unknown',
+          preview_image_url: 'https://example.com/avatar1.jpg',
+          preview_video_url: 'https://example.com/avatar1.mp4'
+        },
+        {
+          avatar_id: 'test-avatar-2',
+          avatar_name: 'Test Avatar 2',
+          gender: 'unknown',
+          preview_image_url: 'https://example.com/avatar2.jpg',
+          preview_video_url: 'https://example.com/avatar2.mp4'
+        }
+      ]
+    }
+
+    it('should list avatars in a group successfully', async () => {
+      mockApiResponse(mockResponse, { version: 'v2' })
+      const result = await service.listInGroup('test-group-id')
+      expect(result).toEqual(mockResponse)
+    })
+
+    describe('error handling', () => {
+      it('should handle group not found', async () => {
+        mockApiError(404, 'Group not found', { version: 'v2' })
+        await expect(service.listInGroup('invalid-group')).rejects.toThrow(
+          'Group not found'
+        )
+      })
+
+      it('should handle unauthorized access', async () => {
+        mockApiError(403, 'Unauthorized access', { version: 'v2' })
+        await expect(service.listInGroup('test-group-id')).rejects.toThrow(
+          'Unauthorized access'
+        )
+      })
+
+      it('should handle server errors', async () => {
+        mockApiError(500, 'Internal server error', { version: 'v2' })
+        await expect(service.listInGroup('test-group-id')).rejects.toThrow(
           'Internal server error'
         )
       })

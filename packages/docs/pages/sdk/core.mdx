@@ -71,8 +71,14 @@ const status = await sdk.videoTranslation.getStatus(
 [Official API Reference](https://docs.heygen.com/reference/list-avatars-v2)
 
 ```typescript
-// List avatars
+// List all avatars
 const avatars = await sdk.avatars.list()
+
+// List avatar groups
+const groups = await sdk.avatars.listGroups()
+
+// List avatars in a group
+const groupAvatars = await sdk.avatars.listInGroup('group_id')
 
 // Get avatar details
 const avatar = await sdk.avatars.get(avatarId)

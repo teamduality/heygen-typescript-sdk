@@ -3,7 +3,8 @@ import type { QueryParams } from './base.js'
 import type {
   AvatarListData,
   AvatarGroupListData,
-  ListAvatarGroupsRequest
+  ListAvatarGroupsRequest,
+  AvatarGroupData
 } from '../types/index.js'
 
 export class AvatarsService extends BaseService {
@@ -23,6 +24,12 @@ export class AvatarsService extends BaseService {
     return this.requestV2<AvatarGroupListData>('/avatar_group.list', {
       method: 'GET',
       queryParams: params as QueryParams
+    })
+  }
+
+  async listInGroup(groupId: string): Promise<AvatarGroupData> {
+    return this.requestV2<AvatarGroupData>(`/avatar_group/${groupId}/avatars`, {
+      method: 'GET'
     })
   }
 }
