@@ -80,6 +80,29 @@ const groups = await sdk.avatars.listGroups()
 // List avatars in a group
 const groupAvatars = await sdk.avatars.listInGroup('group_id')
 
+// Generate a photo avatar
+const photo = await sdk.photoAvatars.generatePhoto({
+  name: 'Business Professional',
+  age: 'Young Adult',
+  gender: 'Woman',
+  ethnicity: 'Asian American',
+  orientation: 'square',
+  pose: 'half_body',
+  style: 'Realistic',
+  appearance: 'A professional woman in a business suit'
+})
+
+// Create and train a photo avatar group
+const group = await sdk.photoAvatars.createGroup({
+  name: 'Business Team',
+  image_key: 'image/key/here'
+})
+await sdk.photoAvatars.trainGroup({ group_id: group.id })
+
+// Add effects
+const motionAvatar = await sdk.photoAvatars.addMotion({ id: photo.id })
+const soundAvatar = await sdk.photoAvatars.addSoundEffect({ id: photo.id })
+
 // Get avatar details
 const avatar = await sdk.avatars.get(avatarId)
 

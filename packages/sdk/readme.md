@@ -39,6 +39,29 @@ const session = await sdk.streaming.create({
   avatar_id: 'your_avatar_id',
   quality: 'medium'
 })
+
+// Generate a photo avatar
+const photo = await sdk.photoAvatars.generatePhoto({
+  name: 'Business Professional',
+  age: 'Young Adult',
+  gender: 'Woman',
+  ethnicity: 'Asian American',
+  orientation: 'square',
+  pose: 'half_body',
+  style: 'Realistic',
+  appearance: 'A professional woman in a business suit'
+})
+
+// Create a photo avatar group
+const group = await sdk.photoAvatars.createGroup({
+  name: 'Business Team',
+  image_key: 'image/key/here'
+})
+
+// Add motion to a photo avatar
+const motionAvatar = await sdk.photoAvatars.addMotion({
+  id: 'photo-avatar-id'
+})
 ```
 
 ## Features
@@ -58,6 +81,12 @@ const session = await sdk.streaming.create({
 - Modify avatar settings
 - Manage avatar groups
 - List avatars in groups
+- Photo avatar generation and management
+  - Generate photo avatars from descriptions
+  - Create and manage photo avatar groups
+  - Add and customize looks
+  - Add motion and sound effects
+  - Upscale photo quality
 
 ### Voice Management
 

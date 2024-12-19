@@ -1,6 +1,7 @@
 export * from './asset.js'
 export * from './avatar.js'
 export * from './brand.js'
+export * from './photo-avatar.js'
 export * from './streaming.js'
 export * from './talking-photo.js'
 export * from './template.js'

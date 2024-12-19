@@ -7,7 +7,7 @@ export interface BrandVoice {
   vocabulary: string[]
 }
 
-export interface ListBrandVoicesRequest extends Record<string, unknown> {
+export interface ListBrandVoicesRequest {
   limit?: number
   token?: string
   name_only?: boolean

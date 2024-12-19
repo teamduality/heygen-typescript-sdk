@@ -70,6 +70,10 @@ pnpm test
 ## ✅ Services Implemented
 
 - 🎭 Avatar Management (Digital Avatars)
+  - Standard avatars
+  - Photo avatars with AI generation
+  - Photo avatar effects
+  - Avatar groups and training
 - 🎬 Video Generation
   - Standard videos
   - WebM videos with transparent background
@@ -85,11 +89,6 @@ pnpm test
 
 ## 📝 Not Yet Implemented
 
-- Photo Avatar APIs
-  - Photo avatar generation
-  - Photo avatar looks
-  - Photo avatar groups
-  - Training and effects
 - Webhook Management
   - Configuration
   - Event handling

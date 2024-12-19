@@ -35,6 +35,6 @@ export interface AvatarGroup {
   train_status: TrainStatus
 }
 
-export interface ListAvatarGroupsRequest extends Record<string, unknown> {
+export interface ListAvatarGroupsRequest {
   include_public?: boolean
 }
