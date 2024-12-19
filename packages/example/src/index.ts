@@ -1,6 +1,6 @@
 import { config } from 'dotenv'
 import { HeygenSDK } from '@teamduality/heygen-typescript-sdk'
-
+import fs from 'fs'
 config()
 
 const apiKey = process.env.HEYGEN_API_KEY
@@ -10,12 +10,12 @@ async function main() {
   }
 
   const sdk = new HeygenSDK(apiKey)
+  // Read the image file
+  const imageFile = fs.readFileSync('./src/lumber_family.jpg')
 
-  const avatars = await sdk.streaming.listStreamingAvatars()
-  console.log('Avatars:', avatars)
-
-  const voices = await sdk.voices.list()
-  console.log('Voices:', voices)
+  // Upload the image
+  const uploadedAsset = await sdk.assets.upload(imageFile, 'image/jpeg')
+  console.log('Uploaded asset:', uploadedAsset)
 }
 
 main().catch(console.error)

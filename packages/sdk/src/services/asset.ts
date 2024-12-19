@@ -1,4 +1,5 @@
 import { BaseService } from './base.js'
+import { V1_UPLOAD_BASE_URL } from '../config/endpoints.js'
 import type { AssetContentType, AssetResponse } from '../types/index.js'
 
 export class AssetService extends BaseService {
@@ -13,7 +14,8 @@ export class AssetService extends BaseService {
     return this.requestV1<AssetResponse>('/asset', {
       method: 'POST',
       file,
-      contentType
+      contentType,
+      baseUrl: V1_UPLOAD_BASE_URL
     })
   }
 }

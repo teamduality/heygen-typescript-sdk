@@ -1,10 +1,5 @@
 import { afterEach, beforeEach } from 'vitest'
-import {
-  mockFetch,
-  createMockResponse,
-  resetMock,
-  type MockOptions
-} from './fetchMock.js'
+import { mockFetch, createMockResponse, resetMock } from './fetchMock.js'
 import { vi } from 'vitest'
 import type { V1ErrorResponse, V2ErrorResponse } from '../utils/httpClient.js'
 
@@ -19,10 +14,13 @@ afterEach(() => {
   mockFetch.mockClear()
 })
 
-export function mockApiResponse<T>(
-  data: T,
-  { version = 'v1', status = 200 }: MockOptions = {}
-) {
+interface MockOptions {
+  version?: 'v1' | 'v2'
+  status?: number
+}
+
+export function mockApiResponse<T>(data: T, options: MockOptions = {}) {
+  const { version = 'v1', status = 200 } = options
   const response = createMockResponse(data, version, status)
   mockFetch.mockResolvedValueOnce(response)
 }

@@ -7,6 +7,7 @@ export type QueryParams = Record<string, QueryParamValue>
 interface BaseRequestOptions {
   method: 'GET' | 'POST' | 'DELETE'
   headers?: Record<string, string>
+  baseUrl?: string
 }
 
 interface JsonRequestOptions<T> extends BaseRequestOptions {
@@ -55,12 +56,12 @@ export abstract class BaseService {
     return this.request<T, B>(path, baseUrl, options)
   }
 
-  private async request<T, B = Record<string, never>>(
+  private async request<T, B = Record<string, unknown>>(
     path: string,
     baseUrl: string,
     options: RequestOptions<B>
   ): Promise<T> {
-    const url = new URL(`${baseUrl}${path}`)
+    const url = new URL(`${options.baseUrl || baseUrl}${path}`)
 
     if ('queryParams' in options && options.queryParams) {
       Object.entries(options.queryParams).forEach(([key, value]) => {
