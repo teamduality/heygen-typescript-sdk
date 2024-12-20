@@ -1,13 +1,13 @@
 {
   "name": "@teamduality/heygen-typescript-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Unofficial TypeScript SDK for the Heygen API, providing a simple interface for video generation and management",
   "author": "Scott Silvi <scott@teamduality.dev>",
   "license": "MIT",
   "homepage": "https://github.com/teamduality/heygen-typescript-sdk",
   "repository": {
     "type": "git",
-    "url": "teamduality/heygen-typescript-sdk"
+    "url": "git+https://github.com/teamduality/heygen-typescript-sdk.git"
   },
   "packageManager": "pnpm@9.4.0",
   "engines": {
@@ -51,5 +51,8 @@
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "publishConfig": {
+    "access": "public"
+  }
 }
