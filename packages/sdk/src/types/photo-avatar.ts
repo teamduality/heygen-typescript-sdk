@@ -174,3 +174,6 @@ export interface GenerationStatusResponse {
   image_url_list: string[]
   image_key_list: string[]
 }
+export interface AvatarGroupData {
+  avatar_list: PhotoAvatarGroup[]
+}

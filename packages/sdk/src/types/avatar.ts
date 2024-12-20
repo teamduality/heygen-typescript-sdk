@@ -18,10 +18,6 @@ export interface AvatarGroupListData {
   avatar_group_list: AvatarGroup[]
 }
 
-export interface AvatarGroupData {
-  avatar_list: Avatar[]
-}
-
 export type GroupType = 'PUBLIC_PHOTO' | 'PRIVATE'
 export type TrainStatus = 'empty' | null
 

@@ -16,9 +16,9 @@ import type {
   TrainPhotoGroupRequest,
   GenerateLooksRequest,
   GenerateLooksResponse,
-  GenerationStatus,
   GenerationStatusResponse,
-  PhotoAvatarGroup
+  PhotoAvatarGroup,
+  AvatarGroupData
 } from '../types/index.js'
 
 export class PhotoAvatarService extends BaseService {
@@ -137,5 +137,9 @@ export class PhotoAvatarService extends BaseService {
     })
   }
 
-  // Other methods will be added...
+  async listInGroup(groupId: string): Promise<AvatarGroupData> {
+    return this.requestV2<AvatarGroupData>(`/avatar_group/${groupId}/avatars`, {
+      method: 'GET'
+    })
+  }
 }

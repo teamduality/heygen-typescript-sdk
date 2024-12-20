@@ -521,4 +521,74 @@ describe('PhotoAvatarService', () => {
       })
     })
   })
+
+  describe('listInGroup', () => {
+    const mockResponse: AvatarGroupData = {
+      avatar_list: [
+        {
+          id: 'test-avatar-1',
+          group_id: 'test-group-id',
+          name: 'Test Avatar 1',
+          image_url: 'https://example.com/avatar1.jpg',
+          created_at: 1234567890,
+          status: 'completed',
+          is_motion: false,
+          motion_preview_url: null,
+          business_type: 'user_upload',
+          upscale_availability: {
+            available: false,
+            reason: 'Photo avatar look upload not completed'
+          },
+          upscaled: false,
+          background_sound_effect: null
+        },
+        {
+          id: 'test-avatar-2',
+          group_id: 'test-group-id',
+          name: 'Test Avatar 2',
+          image_url: 'https://example.com/avatar2.jpg',
+          created_at: 1234567891,
+          status: 'completed',
+          is_motion: false,
+          motion_preview_url: null,
+          business_type: 'user_upload',
+          upscale_availability: {
+            available: false,
+            reason: 'Photo avatar look upload not completed'
+          },
+          upscaled: false,
+          background_sound_effect: null
+        }
+      ]
+    }
+
+    it('should list avatars in a group successfully', async () => {
+      mockApiResponse(mockResponse, { version: 'v2' })
+      const result = await service.listInGroup('test-group-id')
+      expect(result).toEqual(mockResponse)
+    })
+
+    describe('error handling', () => {
+      it('should handle group not found', async () => {
+        mockApiError(404, 'Group not found', { version: 'v2' })
+        await expect(service.listInGroup('invalid-group')).rejects.toThrow(
+          'Group not found'
+        )
+      })
+
+      it('should handle unauthorized access', async () => {
+        mockApiError(403, 'Unauthorized access', { version: 'v2' })
+        await expect(service.listInGroup('test-group-id')).rejects.toThrow(
+          'Unauthorized access'
+        )
+      })
+
+      it('should handle server errors', async () => {
+        mockApiError(500, 'Internal server error', { version: 'v2' })
+        await expect(service.listInGroup('test-group-id')).rejects.toThrow(
+          'Internal server error'
+        )
+      })
+    })
+  })
 })

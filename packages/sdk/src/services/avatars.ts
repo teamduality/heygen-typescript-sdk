@@ -26,10 +26,4 @@ export class AvatarsService extends BaseService {
       queryParams: params as QueryParams
     })
   }
-
-  async listInGroup(groupId: string): Promise<AvatarGroupData> {
-    return this.requestV2<AvatarGroupData>(`/avatar_group/${groupId}/avatars`, {
-      method: 'GET'
-    })
-  }
 }
