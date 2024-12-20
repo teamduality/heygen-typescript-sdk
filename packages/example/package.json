@@ -8,7 +8,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@teamduality/heygen-typescript-sdk": "0.2.0",
+    "@teamduality/heygen-typescript-sdk": "0.3.0",
     "dotenv": "^16.0.0"
   },
   "devDependencies": {
