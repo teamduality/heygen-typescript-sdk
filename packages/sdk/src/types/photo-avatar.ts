@@ -58,7 +58,7 @@ export interface UpscaleAvailability {
   reason?: string
 }
 
-export interface PhotoAvatarGroup {
+export interface PhotoAvatar {
   id: string
   group_id: string
   name: string
@@ -104,23 +104,8 @@ export interface AddLooksRequest extends Record<string, unknown> {
   generation_id?: string // required for generated images, optional for uploads
 }
 
-export interface PhotoAvatarLook {
-  id: string
-  image_url: string
-  created_at: number
-  name: string
-  status: string
-  group_id: string
-  is_motion: boolean
-  motion_preview_url: string | null
-  business_type: string
-  upscale_availability: UpscaleAvailability
-  upscaled: boolean
-  background_sound_effect: string | null
-}
-
 export interface AddLooksResponse {
-  photo_avatar_list: PhotoAvatarLook[]
+  photo_avatar_list: PhotoAvatar[]
 }
 
 export interface AddMotionRequest extends Record<string, unknown> {
@@ -175,5 +160,5 @@ export interface GenerationStatusResponse {
   image_key_list: string[]
 }
 export interface AvatarGroupData {
-  avatar_list: PhotoAvatarGroup[]
+  avatar_list: PhotoAvatar[]
 }

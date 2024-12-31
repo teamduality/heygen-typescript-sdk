@@ -17,7 +17,7 @@ import type {
   GenerateLooksRequest,
   GenerateLooksResponse,
   GenerationStatusResponse,
-  PhotoAvatarGroup,
+  PhotoAvatar,
   AvatarGroupData
 } from '../types/index.js'
 
@@ -131,8 +131,8 @@ export class PhotoAvatarService extends BaseService {
     )
   }
 
-  async getDetails(id: string): Promise<PhotoAvatarGroup> {
-    return this.requestV2<PhotoAvatarGroup>(`/photo_avatar/${id}`, {
+  async getDetails(id: string): Promise<PhotoAvatar> {
+    return this.requestV2<PhotoAvatar>(`/photo_avatar/${id}`, {
       method: 'GET'
     })
   }
