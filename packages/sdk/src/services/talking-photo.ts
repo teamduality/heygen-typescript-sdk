@@ -4,6 +4,7 @@ import type {
   UploadTalkingPhotoResponse,
   TalkingPhotoContentType
 } from '../types/index.js'
+import { V1_UPLOAD_BASE_URL } from '../config/endpoints.js'
 
 export class TalkingPhotoService extends BaseService {
   constructor(apiKey: string) {
@@ -23,7 +24,8 @@ export class TalkingPhotoService extends BaseService {
     return this.requestV1<UploadTalkingPhotoResponse>('/talking_photo', {
       method: 'POST',
       file,
-      contentType
+      contentType,
+      baseUrl: V1_UPLOAD_BASE_URL
     })
   }
 
