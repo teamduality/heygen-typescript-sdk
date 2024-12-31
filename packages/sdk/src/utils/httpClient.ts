@@ -96,7 +96,8 @@ export async function httpClient<T, P = Record<string, unknown>>({
               json,
               json.code
             )
-          case 40012400128:
+          case 40012:
+          case 400128:
             throw new APIError(
               'Invalid querying parameter',
               response.status,

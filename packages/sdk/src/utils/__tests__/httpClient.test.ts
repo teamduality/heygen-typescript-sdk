@@ -548,7 +548,8 @@ describe('httpClient', () => {
 
     const errorCases = [
       { code: 40118, message: 'Cannot use as a template' },
-      { code: 40012400128, message: 'Invalid querying parameter' },
+      { code: 40012, message: 'Invalid querying parameter' },
+      { code: 400128, message: 'Invalid querying parameter' },
       { code: 400123, message: 'Exceed rate limit' },
       { code: 40102, message: 'Unauthorized' },
       { code: 40056, message: 'Failed to generate audio' },
