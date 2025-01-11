@@ -8,7 +8,7 @@ export class VideoManagementService extends BaseService {
   }
 
   async list(params?: ListVideosRequest): Promise<ListVideosResponse> {
-    return this.requestV2<ListVideosResponse>('/video.list', {
+    return this.requestV1<ListVideosResponse>('/video.list', {
       method: 'GET',
       queryParams: params as QueryParams
     })
