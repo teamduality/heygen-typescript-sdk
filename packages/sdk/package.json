@@ -1,6 +1,6 @@
 {
   "name": "@teamduality/heygen-typescript-sdk",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Unofficial TypeScript SDK for the Heygen API, providing a simple interface for video generation and management",
   "author": "Scott Silvi <scott@teamduality.dev>",
   "license": "MIT",
