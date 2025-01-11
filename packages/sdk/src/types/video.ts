@@ -113,6 +113,7 @@ export type VideoStatus = 'completed' | 'processing' | 'failed' | 'draft'
 export interface VideoListItem {
   video_id: string
   status: VideoStatus
+  video_title: string
   created_at: number
   type: VideoType
 }
